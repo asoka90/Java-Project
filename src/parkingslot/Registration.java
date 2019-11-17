@@ -7,7 +7,10 @@ package parkingslot;
 
 import com.sun.glass.events.KeyEvent;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -15,9 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Registration extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Registration
-     */
+    ParkingSlot parking = new ParkingSlot();
     public Registration() {
         initComponents();
     }
@@ -229,7 +230,9 @@ public class Registration extends javax.swing.JFrame {
             
         }
         String veh = vehicleNumber.getText();
+        veh = veh.toUpperCase();
         String courses = course.getText();
+        courses = courses.toUpperCase();
         String addr = address.getText();
         String cont = contact.getText();
         if("Student".equals(type.getSelectedItem().toString()))
@@ -241,19 +244,30 @@ public class Registration extends javax.swing.JFrame {
             else
             {
                 try
-                {
-                    String query = "SELECT * FROM STUDENT";
-                    Statement st = ParkingSlot.connectDB();
+                {                    
+                    Statement st = parking.connectDB();
+                    String query = "SELECT count(*) FROM Student";
                     ResultSet rs = st.executeQuery(query);
+                    int id = 0;
                     while(rs.next())
                     {
-                        String id = rs.getString("SR Code");
-                        System.out.println(id);
+                        id = rs.getInt("count(*)") + 1;
                     }
+                    String int_id = String.format("%04d",id);
+                    System.out.println(int_id);
+                    String insert_query = "INSERT INTO Student([SR Code], Name, Address, Contact, Course,[Vehicle No.]) VALUES(?,?,?,?,?,?)";
+                    PreparedStatement ps = parking.con.prepareStatement(insert_query);
+                    ps.setString(1, "STU"+int_id);
+                    ps.setString(2, cap_names);
+                    ps.setString(3, addr);
+                    ps.setString(4, cont);
+                    ps.setString(5, courses);
+                    ps.setString(6, veh);
+                    ps.executeUpdate();
                 }
                 catch(SQLException e)
                 {
-                    
+                    System.out.println(e);
                 }
             }
         }
