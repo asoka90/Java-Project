@@ -16,7 +16,7 @@ import java.sql.Statement;
  */
 public class ParkingSlot {
     public static Connection con;
-    private static Statement st;
+    public static Statement st;
     
     public static Statement connectDB()
     {

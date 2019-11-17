@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -219,6 +220,7 @@ public class Registration extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Statement st = parking.connectDB();
         String names = name.getText();
         String cap_names = "";
         try
@@ -244,8 +246,7 @@ public class Registration extends javax.swing.JFrame {
             else
             {
                 try
-                {                    
-                    Statement st = parking.connectDB();
+                {                                        
                     String query = "SELECT count(*) FROM Student";
                     ResultSet rs = st.executeQuery(query);
                     int id = 0;
@@ -264,6 +265,7 @@ public class Registration extends javax.swing.JFrame {
                     ps.setString(5, courses);
                     ps.setString(6, veh);
                     ps.executeUpdate();
+                    JOptionPane.showMessageDialog(rootPane, "Registration Successful", "Success", JOptionPane.PLAIN_MESSAGE);
                 }
                 catch(SQLException e)
                 {
@@ -279,9 +281,70 @@ public class Registration extends javax.swing.JFrame {
             }
             else
             {
-                
+                if("Faculty".equals(type.getSelectedItem().toString()))
+                {
+                    try
+                    {                                        
+                        String query = "SELECT count(*) FROM Faculty";
+                        ResultSet rs = st.executeQuery(query);
+                        int id = 0;
+                        while(rs.next())
+                        {
+                            id = rs.getInt("count(*)") + 1;
+                        }
+                        String int_id = String.format("%04d",id);
+                        System.out.println(int_id);
+                        String insert_query = "INSERT INTO Faculty([ER Code], Name, Address, Contact, [Vehicle No.]) VALUES(?,?,?,?,?)";
+                        PreparedStatement ps = parking.con.prepareStatement(insert_query);
+                        ps.setString(1, "EMP"+int_id);
+                        ps.setString(2, cap_names);
+                        ps.setString(3, addr);
+                        ps.setString(4, cont);
+                        ps.setString(5, veh);                        
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(rootPane, "Registration Successful", "Success", JOptionPane.PLAIN_MESSAGE);
+                    }   
+                    catch(SQLException e)
+                    {
+                        System.out.println(e);
+                    }
+                }
+                if("Guest".equals(type.getSelectedItem().toString()))
+                {
+                    try
+                    {                                        
+                        String query = "SELECT count(*) FROM Guest";
+                        ResultSet rs = st.executeQuery(query);
+                        int id = 0;
+                        while(rs.next())
+                        {
+                            id = rs.getInt("count(*)") + 1;
+                        }
+                        String int_id = String.format("%04d",id);
+                        System.out.println(int_id);
+                        String insert_query = "INSERT INTO Guest([Guest Code], Name, Address, Contact, [Vehicle No.]) VALUES(?,?,?,?,?)";
+                        PreparedStatement ps = parking.con.prepareStatement(insert_query);
+                        ps.setString(1, "GUE"+int_id);
+                        ps.setString(2, cap_names);
+                        ps.setString(3, addr);
+                        ps.setString(4, cont);
+                        ps.setString(5, veh);                        
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(rootPane, "Registration Successful", "Success", JOptionPane.PLAIN_MESSAGE);
+                    }   
+                    catch(SQLException e)
+                    {
+                        System.out.println(e);
+                    }
+                }
             }
         }
+        SwingUtilities.updateComponentTreeUI(this);
+        name.setText(null);
+        address.setText(null);
+        vehicleNumber.setText(null);
+        contact.setText(null);
+        course.setText(null);               
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void nameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameKeyPressed
