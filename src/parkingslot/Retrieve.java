@@ -5,6 +5,14 @@
  */
 package parkingslot;
 
+import com.sun.glass.events.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Win10
@@ -14,6 +22,7 @@ public class Retrieve extends javax.swing.JFrame {
     /**
      * Creates new form Retrieve
      */
+    ParkingSlot parking = new ParkingSlot();
     public Retrieve() {
         initComponents();
     }
@@ -28,25 +37,32 @@ public class Retrieve extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        ref = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        vehi = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         setSize(257, 213);
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setText("Reference Code");
 
-        jTextField1.setColumns(20);
-        jTextField1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        ref.setColumns(20);
+        ref.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        ref.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                refKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("Vehicle No.");
 
-        jTextField2.setColumns(20);
-        jTextField2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehi.setColumns(20);
+        vehi.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehi.setEnabled(false);
 
         jButton1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jButton1.setText("Retrieve a vehicle");
@@ -71,9 +87,9 @@ public class Retrieve extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(vehi, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(ref, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(64, 64, 64))))
         );
         layout.setVerticalGroup(
@@ -82,22 +98,119 @@ public class Retrieve extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ref, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(vehi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jButton1)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Statement st = parking.connectDB();
+        String query = "SELECT id\n" +
+                        "  FROM Faculty\n" +
+                        "UNION\n" +
+                        "SELECT id\n" +
+                        "  FROM Guest\n" +
+                        "UNION\n" +
+                        "SELECT id\n" +
+                        "  FROM Student;";
+        String ref_code = ref.getText();
+        ref_code = ref_code.toUpperCase();
+        boolean valid = false;
+        try {
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next())
+            {
+                String id = rs.getString("id");               
+                if(ref_code.equals(id))
+                {
+                    valid =true;
+                }                
+            }
+            
+            if(valid)
+            {
+                JOptionPane.showMessageDialog(rootPane, "Vehicle park move into slot successfuly");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(rootPane, "Reference code does not exist", "Invalid", JOptionPane.WARNING_MESSAGE);
+            }    
+        } catch (SQLException ex) {
+            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ref.setText(null);
+        vehi.setText(null);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void refKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_refKeyReleased
+        // TODO add your handling code here:
+        String ref_c = ref.getText();
+        int length = ref_c.length();
+            if(length < 7)
+            {
+                ref.setEditable(true);
+            }
+            else
+            {
+                ref.setEditable(false);
+            }
+            if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
+            {
+                ref.setEditable(true);
+            }
+        Statement st = parking.connectDB();
+        String query = "SELECT id\n" +
+                        "  FROM Faculty\n" +
+                        "UNION\n" +
+                        "SELECT id\n" +
+                        "  FROM Guest\n" +
+                        "UNION\n" +
+                        "SELECT id\n" +
+                        "  FROM Student;";
+        String ref_code = ref.getText();
+        ref_code = ref_code.toUpperCase();
+        try {
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next())
+            {
+                String id = rs.getString("id");               
+                if(ref_code.equals(id))
+                {
+                    String get_vehi = "SELECT VehicleNumber\n" +
+                                        "  FROM Faculty\n" +
+                                        " WHERE id = '"+id+"'\n" +
+                                        "UNION\n" +
+                                        "SELECT VehicleNumber\n" +
+                                        "  FROM Guest\n" +
+                                        " WHERE id = '"+id+"'\n" +
+                                        "UNION\n" +
+                                        "SELECT VehicleNumber\n" +
+                                        "  FROM Student\n" +
+                                        " WHERE id = '"+id+"';";
+                    ResultSet gs = st.executeQuery(get_vehi);
+                    while(gs.next())
+                    {
+                        String c = gs.getString("VehicleNumber");
+                        System.out.println(c);   
+                        vehi.setText(c);
+                    }
+                }
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_refKeyReleased
 
     /**
      * @param args the command line arguments
@@ -138,7 +251,7 @@ public class Retrieve extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField ref;
+    private javax.swing.JTextField vehi;
     // End of variables declaration//GEN-END:variables
 }

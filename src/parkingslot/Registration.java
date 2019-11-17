@@ -256,7 +256,7 @@ public class Registration extends javax.swing.JFrame {
                     }
                     String int_id = String.format("%04d",id);
                     System.out.println(int_id);
-                    String insert_query = "INSERT INTO Student([SR Code], Name, Address, Contact, Course,[Vehicle No.]) VALUES(?,?,?,?,?,?)";
+                    String insert_query = "INSERT INTO Student(id, Name, Address, Contact, Course,VehicleNumber) VALUES(?,?,?,?,?,?)";
                     PreparedStatement ps = parking.con.prepareStatement(insert_query);
                     ps.setString(1, "STU"+int_id);
                     ps.setString(2, cap_names);
@@ -294,7 +294,7 @@ public class Registration extends javax.swing.JFrame {
                         }
                         String int_id = String.format("%04d",id);
                         System.out.println(int_id);
-                        String insert_query = "INSERT INTO Faculty([ER Code], Name, Address, Contact, [Vehicle No.]) VALUES(?,?,?,?,?)";
+                        String insert_query = "INSERT INTO Faculty(id, Name, Address, Contact, VehicleNumber) VALUES(?,?,?,?,?)";
                         PreparedStatement ps = parking.con.prepareStatement(insert_query);
                         ps.setString(1, "EMP"+int_id);
                         ps.setString(2, cap_names);
@@ -322,7 +322,7 @@ public class Registration extends javax.swing.JFrame {
                         }
                         String int_id = String.format("%04d",id);
                         System.out.println(int_id);
-                        String insert_query = "INSERT INTO Guest([Guest Code], Name, Address, Contact, [Vehicle No.]) VALUES(?,?,?,?,?)";
+                        String insert_query = "INSERT INTO Guest(id, Name, Address, Contact, VehicleNumber) VALUES(?,?,?,?,?)";
                         PreparedStatement ps = parking.con.prepareStatement(insert_query);
                         ps.setString(1, "GUE"+int_id);
                         ps.setString(2, cap_names);
