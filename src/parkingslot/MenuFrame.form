@@ -41,7 +41,8 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="63" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <Component id="jPanel1" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -62,6 +63,7 @@
               <Component id="jButton5" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
+          <Component id="jPanel1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -124,5 +126,66 @@
         <Property name="text" type="java.lang.String" value="Exit"/>
       </Properties>
     </Component>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="99" red="ff" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f0" green="f0" red="f0" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="505" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="slotTable">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Calibri" size="14" style="0"/>
+                </Property>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    slots,&#xa;    new String [] {&#xa;        &quot;Slots&quot;, &quot;ID&quot;, &quot;Name&quot;, &quot;Vehicle Number&quot;&#xa;    }&#xa;) {&#xa;    boolean[] canEdit = new boolean [] {&#xa;        false, false, false, false&#xa;    };&#xa;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;        return canEdit [columnIndex];&#xa;    }&#xa;}" type="code"/>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0"/>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="slotTable.getTableHeader().setResizingAllowed(false);&#xa;slotTable.getTableHeader().setReorderingAllowed(false);&#xa;ParkingSlot ps = new ParkingSlot();&#xa;        Statement st = ps.connectDB();&#xa;        String query = &quot;SELECT count(*) AS Count FROM CountSlots&quot;;&#xa;        int count = 0;&#xa;        try {&#xa;            ResultSet rs = st.executeQuery(query);&#xa;            while(rs.next())&#xa;            {&#xa;                count = rs.getInt(&quot;Count&quot;);              &#xa;            }&#xa;        } catch (SQLException ex) {&#xa;            Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);&#xa;        }&#xa;        slots = new Object[50][4];               &#xa;        String count_query = &quot;SELECT Slot, VehicleNumber, Name, id\n&quot; +&#xa;                            &quot;  FROM Student\n&quot; +&#xa;                            &quot; WHERE Slot IS NOT NULL\n&quot; +&#xa;                            &quot;UNION\n&quot; +&#xa;                            &quot;SELECT Slot, VehicleNumber, Name, id\n&quot; +&#xa;                            &quot;  FROM Guest\n&quot; +&#xa;                            &quot; WHERE Slot IS NOT NULL\n&quot; +&#xa;                            &quot;UNION\n&quot; +&#xa;                            &quot;SELECT Slot, VehicleNumber, Name, id\n&quot; +&#xa;                            &quot;  FROM Faculty\n&quot; +&#xa;                            &quot; WHERE Slot IS NOT NULL&quot;;&#xa;        try {&#xa;            ResultSet rsc = st.executeQuery(count_query);&#xa;            int x = 0;&#xa;            while(rsc.next() &amp;&amp; x &lt; slots.length)&#xa;            {&#xa;                String id = rsc.getString(&quot;id&quot;);&#xa;                int slot = rsc.getInt(&quot;Slot&quot;);&#xa;                String vehicle = rsc.getString(&quot;VehicleNumber&quot;);&#xa;                String name = rsc.getString(&quot;Name&quot;);&#xa;                &#xa;                    slots[x][0] = slot;&#xa;                    slots[x][1] = id;&#xa;                    slots[x][2] = name;&#xa;                    slots[x][3] = vehicle;&#xa;                x++;&#xa;            }          &#xa;        } catch (SQLException ex) {&#xa;            Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);&#xa;        }"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

@@ -125,13 +125,13 @@ public class Park extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Statement st = parking.connectDB();
-        String query = "SELECT id, Slot\n" +
+        String query = "SELECT id, Slot, VehicleNumber, Name\n" +
                         "  FROM Faculty\n" +
                         "UNION\n" +
-                        "SELECT id, Slot\n" +
+                        "SELECT id, Slot, VehicleNumber, Name\n" +
                         "  FROM Guest\n" +
                         "UNION\n" +
-                        "SELECT id, Slot\n" +
+                        "SELECT id, Slot, VehicleNumber, Name\n" +
                         "  FROM Student;";
         String ref_code = ref.getText();
         ref_code = ref_code.toUpperCase();
@@ -142,10 +142,12 @@ public class Park extends javax.swing.JFrame {
             {
                 String id = rs.getString("id");
                 int slot = rs.getInt("Slot");
+//                String vehicle = rs.getString("VehicleNumber");
+//                String name = rs.getString("Name");
                 if(ref_code.equals(id))
                 {
                     if(slot == 0)
-                    {
+                    {                        
                         valid =true;
                     }
                     else

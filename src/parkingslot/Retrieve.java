@@ -145,7 +145,15 @@ public class Retrieve extends javax.swing.JFrame {
                         return;
                     }
                     else
-                    {
+                    {                           
+                            String que_table = "SELECT name FROM sqlite_master WHERE type='table' AND name is not 'sqlite_sequence'";
+                            ResultSet rsque = st.executeQuery(que_table);
+                            while(rsque.next())
+                            {
+                                String s = rsque.getString("name");
+                                System.out.println(s);
+                            }
+//                            String upd_query = "UPDATE "+tableName+" ";                            
                         valid =true;
                     }
                 }                

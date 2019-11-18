@@ -6,13 +6,22 @@
 
 package parkingslot;
 
+import com.sun.corba.se.impl.interceptors.SlotTable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Win10
  */
 public class MenuFrame extends javax.swing.JFrame {
-
     /** Creates new form MenuFrame */
+    public static Object slots[][];
     public MenuFrame() {  
         initComponents();
     }
@@ -32,6 +41,9 @@ public class MenuFrame extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        slotTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -70,6 +82,89 @@ public class MenuFrame extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton5.setText("Exit");
 
+        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel1.setForeground(new java.awt.Color(240, 240, 240));
+
+        slotTable.getTableHeader().setResizingAllowed(false);
+        slotTable.getTableHeader().setReorderingAllowed(false);
+        ParkingSlot ps = new ParkingSlot();
+        Statement st = ps.connectDB();
+        String query = "SELECT count(*) AS Count FROM CountSlots";
+        int count = 0;
+        try {
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next())
+            {
+                count = rs.getInt("Count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        slots = new Object[50][4];
+        String count_query = "SELECT Slot, VehicleNumber, Name, id\n" +
+        "  FROM Student\n" +
+        " WHERE Slot IS NOT NULL\n" +
+        "UNION\n" +
+        "SELECT Slot, VehicleNumber, Name, id\n" +
+        "  FROM Guest\n" +
+        " WHERE Slot IS NOT NULL\n" +
+        "UNION\n" +
+        "SELECT Slot, VehicleNumber, Name, id\n" +
+        "  FROM Faculty\n" +
+        " WHERE Slot IS NOT NULL";
+        try {
+            ResultSet rsc = st.executeQuery(count_query);
+            int x = 0;
+            while(rsc.next() && x < slots.length)
+            {
+                String id = rsc.getString("id");
+                int slot = rsc.getInt("Slot");
+                String vehicle = rsc.getString("VehicleNumber");
+                String name = rsc.getString("Name");
+
+                slots[x][0] = slot;
+                slots[x][1] = id;
+                slots[x][2] = name;
+                slots[x][3] = vehicle;
+                x++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        slotTable.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        slotTable.setModel(new javax.swing.table.DefaultTableModel(
+            slots,
+            new String [] {
+                "Slots", "ID", "Name", "Vehicle Number"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(slotTable);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,7 +182,8 @@ public class MenuFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton3, jButton4, jButton5, register});
@@ -108,6 +204,7 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addContainerGap(21, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -134,7 +231,7 @@ public class MenuFrame extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
-     */
+     */    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -157,12 +254,12 @@ public class MenuFrame extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MenuFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
+        //</editor-fold>                      
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MenuFrame().setVisible(true);
+                
             }
         });
     }
@@ -173,7 +270,10 @@ public class MenuFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton register;
+    private javax.swing.JTable slotTable;
     // End of variables declaration//GEN-END:variables
 
 }
