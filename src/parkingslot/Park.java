@@ -125,13 +125,13 @@ public class Park extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Statement st = parking.connectDB();
-        String query = "SELECT id\n" +
+        String query = "SELECT id, Slot\n" +
                         "  FROM Faculty\n" +
                         "UNION\n" +
-                        "SELECT id\n" +
+                        "SELECT id, Slot\n" +
                         "  FROM Guest\n" +
                         "UNION\n" +
-                        "SELECT id\n" +
+                        "SELECT id, Slot\n" +
                         "  FROM Student;";
         String ref_code = ref.getText();
         ref_code = ref_code.toUpperCase();
@@ -140,10 +140,19 @@ public class Park extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(query);
             while(rs.next())
             {
-                String id = rs.getString("id");               
+                String id = rs.getString("id");
+                int slot = rs.getInt("Slot");
                 if(ref_code.equals(id))
                 {
-                    valid =true;
+                    if(slot == 0)
+                    {
+                        valid =true;
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(rootPane, "Vehicle is already parked", "Error", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
                 }                
             }
             

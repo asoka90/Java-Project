@@ -42,9 +42,14 @@ public class Retrieve extends javax.swing.JFrame {
         vehi = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setSize(257, 213);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setText("Reference Code");
@@ -115,13 +120,13 @@ public class Retrieve extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Statement st = parking.connectDB();
-        String query = "SELECT id\n" +
+        String query = "SELECT id, Slot\n" +
                         "  FROM Faculty\n" +
                         "UNION\n" +
-                        "SELECT id\n" +
+                        "SELECT id, Slot\n" +
                         "  FROM Guest\n" +
                         "UNION\n" +
-                        "SELECT id\n" +
+                        "SELECT id, Slot\n" +
                         "  FROM Student;";
         String ref_code = ref.getText();
         ref_code = ref_code.toUpperCase();
@@ -130,10 +135,19 @@ public class Retrieve extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(query);
             while(rs.next())
             {
-                String id = rs.getString("id");               
+                String id = rs.getString("id");   
+                int slot = rs.getInt("Slot");
                 if(ref_code.equals(id))
                 {
-                    valid =true;
+                    if(slot == 0)
+                    {
+                        JOptionPane.showMessageDialog(rootPane, "Vehicle is not parked", "Error", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                    else
+                    {
+                        valid =true;
+                    }
                 }                
             }
             
@@ -211,6 +225,11 @@ public class Retrieve extends javax.swing.JFrame {
             Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_refKeyReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        new MenuFrame().setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
