@@ -89,17 +89,6 @@ public class MenuFrame extends javax.swing.JFrame {
         slotTable.getTableHeader().setReorderingAllowed(false);
         ParkingSlot ps = new ParkingSlot();
         Statement st = ps.connectDB();
-        String query = "SELECT count(*) AS Count FROM CountSlots";
-        int count = 0;
-        try {
-            ResultSet rs = st.executeQuery(query);
-            while(rs.next())
-            {
-                count = rs.getInt("Count");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
         slots = new Object[50][4];
         String count_query = "SELECT Slot, VehicleNumber, Name, id\n" +
         "  FROM Student\n" +
@@ -112,9 +101,12 @@ public class MenuFrame extends javax.swing.JFrame {
         "SELECT Slot, VehicleNumber, Name, id\n" +
         "  FROM Faculty\n" +
         " WHERE Slot IS NOT NULL";
+        int x = 0;
+        int numbers[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50};
+        int slot_get[];
+        slot_get = new int[slots.length + 1];
         try {
             ResultSet rsc = st.executeQuery(count_query);
-            int x = 0;
             while(rsc.next() && x < slots.length)
             {
                 String id = rsc.getString("id");
@@ -126,6 +118,7 @@ public class MenuFrame extends javax.swing.JFrame {
                 slots[x][1] = id;
                 slots[x][2] = name;
                 slots[x][3] = vehicle;
+                slot_get[x] = slot;
                 x++;
             }
         } catch (SQLException ex) {

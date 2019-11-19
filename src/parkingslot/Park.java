@@ -6,9 +6,12 @@
 package parkingslot;
 
 import com.sun.glass.events.KeyEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -125,6 +128,8 @@ public class Park extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Statement st = parking.connectDB();
+        ArrayList<Integer> slotData = new ArrayList<Integer>();            
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
         String query = "SELECT id, Slot, VehicleNumber, Name\n" +
                         "  FROM Faculty\n" +
                         "UNION\n" +
@@ -133,6 +138,36 @@ public class Park extends javax.swing.JFrame {
                         "UNION\n" +
                         "SELECT id, Slot, VehicleNumber, Name\n" +
                         "  FROM Student;";
+        String count_query = "SELECT Slot, VehicleNumber, Name, id\n" +
+                            "  FROM Student\n" +
+                            " WHERE Slot IS NOT NULL\n" +
+                            "UNION\n" +
+                            "SELECT Slot, VehicleNumber, Name, id\n" +
+                            "  FROM Guest\n" +
+                            " WHERE Slot IS NOT NULL\n" +
+                            "UNION\n" +
+                            "SELECT Slot, VehicleNumber, Name, id\n" +
+                            "  FROM Faculty\n" +
+                            " WHERE Slot IS NOT NULL";
+        try {
+            
+            for(int y = 1; y <= 50; y++)
+            {
+                numbers.add(y);
+            }
+            ResultSet slotrs = st.executeQuery(count_query);
+            while(slotrs.next())
+            {                
+                slotData.add(slotrs.getInt("Slot"));      
+            }
+            numbers.removeAll(slotData);
+        } catch (SQLException ex) {
+            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            
+        }
         String ref_code = ref.getText();
         ref_code = ref_code.toUpperCase();
         boolean valid = false;
@@ -142,13 +177,24 @@ public class Park extends javax.swing.JFrame {
             {
                 String id = rs.getString("id");
                 int slot = rs.getInt("Slot");
-//                String vehicle = rs.getString("VehicleNumber");
-//                String name = rs.getString("Name");
+                String vehicle = rs.getString("VehicleNumber");
                 if(ref_code.equals(id))
                 {
+                    String tableNames[] = {"Student", "Faculty", "Guest"};
                     if(slot == 0)
-                    {                        
-                        valid =true;
+                    {         
+                        int t = 0;
+                        Random ran = new Random();
+                        int random_slot = ran.nextInt((numbers.size() - 1) + 1);                        
+                        while(t < tableNames.length)
+                        {                               
+                            String update_query = "UPDATE "+tableNames[t]+" SET Slot = "+random_slot+" WHERE id = '"+id+"' AND VehicleNumber = '"+vehicle+"'";
+                            PreparedStatement ps = parking.con.prepareStatement(update_query);
+                            ps.executeUpdate();
+                            valid =true;
+                            t++;
+                        }
+                        
                     }
                     else
                     {
@@ -224,8 +270,7 @@ public class Park extends javax.swing.JFrame {
                     {
                         String c = gs.getString("VehicleNumber");
                         System.out.println(c);   
-                        vehi.setText(c);
-                        
+                        vehi.setText(c);                        
                     }
                 }
                 else{
