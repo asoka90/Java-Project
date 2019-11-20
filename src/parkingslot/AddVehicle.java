@@ -5,6 +5,14 @@
  */
 package parkingslot;
 
+import com.sun.glass.events.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Win10
@@ -14,10 +22,38 @@ public class AddVehicle extends javax.swing.JFrame {
     /**
      * Creates new form AddVehicle
      */
-    public AddVehicle() {
+    ParkingSlot parking = new ParkingSlot();
+    public AddVehicle() {       
+        System.out.println(checkID("STU0001"));
         initComponents();
     }
-
+    
+    public boolean checkID(String ID)
+    {
+        Statement st = parking.connectDB();
+        String tableName[] = {"Student", "Faculty", "Guest"};
+        int x = 0;
+        while(x < tableName.length)
+        {
+            String query = "SELECT ID FROM "+tableName[x]+" WHERE ID = '"+ID+"'";
+            try {
+                ResultSet rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                    String idDB = rs.getString("ID");
+                    if(idDB.equals(ID))
+                    {
+                        return true;
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            x++;
+        }
+        return false;
+    }
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,6 +63,14 @@ public class AddVehicle extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        idText = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        vehicleTypeBox = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
+        vehiclenumberText = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -34,15 +78,86 @@ public class AddVehicle extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel1.setText("ID:");
+
+        idText.setColumns(15);
+        idText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        idText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                idTextKeyPressed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel2.setText("Vehicle Type:");
+
+        vehicleTypeBox.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehicleTypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cars", "Motorcycle", "Bus", "Truck" }));
+
+        jLabel6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel6.setText("Vehicle Number:");
+
+        vehiclenumberText.setColumns(15);
+        vehiclenumberText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehiclenumberText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                vehiclenumberTextKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                vehiclenumberTextKeyReleased(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jButton1.setText("Add Vehicle");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idText)
+                            .addComponent(vehicleTypeBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(92, 92, 92))
+                            .addComponent(vehiclenumberText))))
+                .addGap(128, 128, 128))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(vehicleTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(vehiclenumberText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -53,6 +168,67 @@ public class AddVehicle extends javax.swing.JFrame {
         // TODO add your handling code here:
         new MenuFrame().setVisible(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String id = idText.getText();
+        id = id.toUpperCase();
+        String vehicleType = vehicleTypeBox.getSelectedItem().toString();
+        String vehicleNumber = vehiclenumberText.getText();
+        vehicleNumber = vehicleNumber.toUpperCase();
+        
+        Statement st = parking.connectDB();
+        if(checkID(id))
+        {
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "ID not found", "ID Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void idTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idTextKeyPressed
+        // TODO add your handling code here:
+        String get = idText.getText();
+        int length = get.length();
+        if(length < 7)
+        {
+            idText.setEditable(true);
+        }
+        else
+        {
+            idText.setEditable(false);
+        }
+        if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
+        {
+            idText.setEditable(true);
+        }
+    }//GEN-LAST:event_idTextKeyPressed
+
+    private void vehiclenumberTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_vehiclenumberTextKeyPressed
+        // TODO add your handling code here:
+        String get = vehiclenumberText.getText();
+        int length = get.length();
+        if(length < 9)
+        {
+            vehiclenumberText.setEditable(true);
+        }
+        else
+        {
+            vehiclenumberText.setEditable(false);
+        }
+        if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
+        {
+            vehiclenumberText.setEditable(true);
+        }        
+    }//GEN-LAST:event_vehiclenumberTextKeyPressed
+
+    private void vehiclenumberTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_vehiclenumberTextKeyReleased
+        // TODO add your handling code here:
+        String get = vehiclenumberText.getText();
+        vehiclenumberText.setText(get.toUpperCase());
+    }//GEN-LAST:event_vehiclenumberTextKeyReleased
 
     /**
      * @param args the command line arguments
@@ -90,5 +266,12 @@ public class AddVehicle extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField idText;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JComboBox vehicleTypeBox;
+    private javax.swing.JTextField vehiclenumberText;
     // End of variables declaration//GEN-END:variables
 }

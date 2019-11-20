@@ -37,13 +37,14 @@ public class MenuFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         register = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        addvehicle = new javax.swing.JButton();
+        retrieve = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         slotTable = new javax.swing.JTable();
+        park = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -52,7 +53,7 @@ public class MenuFrame extends javax.swing.JFrame {
         jLabel1.setText("Choose:");
 
         register.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        register.setText("Register a vehicle");
+        register.setText("Register a person");
         register.setRequestFocusEnabled(false);
         register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,19 +61,19 @@ public class MenuFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jButton2.setText("Park a vehicle");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        addvehicle.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        addvehicle.setText("Add a vehicle");
+        addvehicle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addvehicleActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jButton3.setText("Retrieve a vehicle");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        retrieve.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        retrieve.setText("Retrieve a vehicle");
+        retrieve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                retrieveActionPerformed(evt);
             }
         });
 
@@ -158,6 +159,14 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        park.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        park.setText("Park a vehicle");
+        park.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,10 +177,11 @@ public class MenuFrame extends javax.swing.JFrame {
                         .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(register)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3)
+                            .addComponent(addvehicle)
+                            .addComponent(retrieve)
                             .addComponent(jButton4)
-                            .addComponent(jButton5)))
+                            .addComponent(jButton5)
+                            .addComponent(park)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)))
@@ -179,7 +189,7 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton3, jButton4, jButton5, register});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addvehicle, jButton4, jButton5, park, register, retrieve});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,14 +199,16 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(register)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(addvehicle)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(park)
+                .addGap(18, 18, 18)
+                .addComponent(retrieve)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -210,17 +222,23 @@ public class MenuFrame extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_registerActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addvehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addvehicleActionPerformed
         // TODO add your handling code here:
-        new Park().setVisible(true);
+        new AddVehicle().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addvehicleActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void retrieveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retrieveActionPerformed
         // TODO add your handling code here:
         new Retrieve().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_retrieveActionPerformed
+
+    private void parkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parkActionPerformed
+        // TODO add your handling code here:
+        new Park().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_parkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,14 +276,15 @@ public class MenuFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton addvehicle;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton park;
     private javax.swing.JButton register;
+    private javax.swing.JButton retrieve;
     private javax.swing.JTable slotTable;
     // End of variables declaration//GEN-END:variables
 
