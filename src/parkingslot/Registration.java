@@ -20,10 +20,22 @@ import javax.xml.bind.DatatypeConverter;
 public class Registration extends javax.swing.JFrame {
 
     ParkingSlot parking = new ParkingSlot();
-    public Registration() {
+    public Registration() {       
         initComponents();
     }
-
+    public int count(String tableName) throws SQLException
+    {
+        //Count
+        Statement st = parking.connectDB();
+        String query = "SELECT count(*) AS CountID FROM "+tableName+"";
+        ResultSet rs = st.executeQuery(query);
+        int id = 0;
+        while(rs.next())
+        {
+            id = rs.getInt("CountID");
+        }
+        return id+1;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,12 +47,10 @@ public class Registration extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         name = new javax.swing.JTextField();
-        vehicleNumber = new javax.swing.JTextField();
         course = new javax.swing.JTextField();
         address = new javax.swing.JTextField();
         contact = new javax.swing.JTextField();
@@ -61,9 +71,6 @@ public class Registration extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("Name");
 
-        jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel3.setText("Vehicle No.");
-
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel4.setText("Course");
 
@@ -77,13 +84,6 @@ public class Registration extends javax.swing.JFrame {
         name.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nameKeyPressed(evt);
-            }
-        });
-
-        vehicleNumber.setColumns(28);
-        vehicleNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                vehicleNumberKeyPressed(evt);
             }
         });
 
@@ -124,47 +124,23 @@ public class Registration extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(143, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jButton1)
-                            .addComponent(contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(vehicleNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(course, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jButton1)
+                        .addComponent(contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(course, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,10 +151,6 @@ public class Registration extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(4, 4, 4)
                 .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(vehicleNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -193,7 +165,7 @@ public class Registration extends javax.swing.JFrame {
                 .addComponent(contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(28, 28, 28))
         );
@@ -220,129 +192,197 @@ public class Registration extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Statement st = parking.connectDB();
+        Statement st = parking.connectDB();     
         String names = name.getText();
-        String cap_names = "";
         try
         {
-            cap_names = names.substring(0, 1).toUpperCase() + names.substring(1);
+        names = names.substring(0, 1).toUpperCase() + names.substring(1);
         }
         catch(StringIndexOutOfBoundsException e)
-        {
-            
-        }
-        String veh = vehicleNumber.getText();
-        veh = veh.toUpperCase();
-        String courses = course.getText();
-        courses = courses.toUpperCase();
-        String addr = address.getText();
+        {}        
+        String addr = address.getText();        
         String cont = contact.getText();
-        if("Student".equals(type.getSelectedItem().toString()))
+        String cour = course.getText();
+        cour = cour.toUpperCase();
+        String types = type.getSelectedItem().toString();
+        String query;
+        //
+        if ("Student".equals(types))
         {
-            if ("".equals(names) || "".equals(veh) || "".equals(courses) || "".equals(addr) || "".equals(cont))
+            if("".equals(names) || "".equals(addr) || "".equals(cont) || "".equals(cour))
             {
-                JOptionPane.showMessageDialog(rootPane, "Fill up all the required fields!", "Registration failed", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(rootPane, "Fill up all the required fields!", "Registration Failed", JOptionPane.WARNING_MESSAGE);
             }
             else
-            {
-                try
-                {                                        
-                    String query = "SELECT count(*) FROM Student";
-                    ResultSet rs = st.executeQuery(query);
-                    int id = 0;
+            {                
+                try {
+                    query = "INSERT INTO Person (\n" +
+                        "Name,\n" +
+                        "Address,\n" +
+                        "Contact,\n" +
+                        "Course,\n" +
+                        "Category\n" +
+                        ") Values(?,?,?,?,?)";
+                    PreparedStatement ps = parking.con.prepareStatement(query);
+                    ps.setString(1, names);
+                    ps.setString(2, addr);
+                    ps.setString(3, cont);
+                    ps.setString(4, cour);
+                    ps.setString(5, types);
+                    ps.execute();
+
+                    String int_id = String.format("%04d",count("Student"));
+                    //
+                    String pquery = "SELECT PersonID FROM Person WHERE Name = '"+names+"'";
+                    ResultSet rs = st.executeQuery(pquery);
+                    int personid = 0;
                     while(rs.next())
                     {
-                        id = rs.getInt("count(*)") + 1;
+                        personid = rs.getInt("PersonID");
                     }
-                    String int_id = String.format("%04d",id);
-                    System.out.println(int_id);
-                    String insert_query = "INSERT INTO Student(id, Name, Address, Contact, Course,VehicleNumber) VALUES(?,?,?,?,?,?)";
-                    PreparedStatement ps = parking.con.prepareStatement(insert_query);
+                    System.out.println(personid);
+                    query = "INSERT INTO Student (\n" +
+                        "ID, \n"+
+                        "Name,\n" +
+                        "Address,\n" +
+                        "Contact,\n" +
+                        "Course,\n" +
+                        "Category,\n" +
+                        "PersonID\n"+
+                        ") Values(?,?,?,?,?,?,?)";
+                    ps = parking.con.prepareStatement(query);
                     ps.setString(1, "STU"+int_id);
-                    ps.setString(2, cap_names);
+                    ps.setString(2, names);
                     ps.setString(3, addr);
                     ps.setString(4, cont);
-                    ps.setString(5, courses);
-                    ps.setString(6, veh);
+                    ps.setString(5, cour);
+                    ps.setString(6, types);
+                    ps.setInt(7, personid);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(rootPane, "Registration Successful", "Success", JOptionPane.PLAIN_MESSAGE);
-                }
-                catch(SQLException e)
-                {
-                    System.out.println(e);
+                    JOptionPane.showMessageDialog(rootPane, "Registration Successful");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         else
         {
-            if ("".equals(names) || "".equals(veh) || "".equals(addr) || "".equals(cont))
+            if("Faculty".equals(types))
             {
-                JOptionPane.showMessageDialog(rootPane, "Fill up all the required fields!", "Registration failed", JOptionPane.WARNING_MESSAGE);
+                if("".equals(names) || "".equals(addr) || "".equals(cont))
+                {
+                    JOptionPane.showMessageDialog(rootPane, "Fill up all the required fields!", "Registration Failed", JOptionPane.WARNING_MESSAGE);
+                }   
+                else
+                {                
+                    try {
+                        query = "INSERT INTO Person (\n" +
+                            "Name,\n" +
+                            "Address,\n" +
+                            "Contact,\n" +
+                            "Course,\n" +
+                            "Category\n" +
+                            ") Values(?,?,?,?,?)";
+                        PreparedStatement ps = parking.con.prepareStatement(query);
+                        ps.setString(1, names);
+                        ps.setString(2, addr);
+                        ps.setString(3, cont);
+                        ps.setString(4, cour);
+                        ps.setString(5, types);
+                        ps.execute();
+
+                        String int_id = String.format("%04d",count("Faculty"));
+                        //
+                        String pquery = "SELECT PersonID FROM Person WHERE Name = '"+names+"'";
+                        ResultSet rs = st.executeQuery(pquery);
+                        int personid = 0;
+                        while(rs.next())
+                        {
+                            personid = rs.getInt("PersonID");
+                        }
+                        System.out.println(personid);
+                        query = "INSERT INTO Faculty (\n" +
+                            "ID, \n"+
+                            "Name,\n" +
+                            "Address,\n" +
+                            "Contact,\n" +                                
+                            "Category,\n" +
+                            "PersonID\n"+
+                            ") Values(?,?,?,?,?,?)";
+                        ps = parking.con.prepareStatement(query);
+                        ps.setString(1, "ER"+int_id);
+                        ps.setString(2, names);
+                        ps.setString(3, addr);
+                        ps.setString(4, cont);                            
+                        ps.setString(5, types);
+                        ps.setInt(6, personid);
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(rootPane, "Registration Successful");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }                
             }
-            else
+            if("Guest".equals(types))
             {
-                if("Faculty".equals(type.getSelectedItem().toString()))
+                if("".equals(names) || "".equals(addr) || "".equals(cont))
                 {
-                    try
-                    {                                        
-                        String query = "SELECT count(*) FROM Faculty";
-                        ResultSet rs = st.executeQuery(query);
-                        int id = 0;
+                    JOptionPane.showMessageDialog(rootPane, "Fill up all the required fields!", "Registration Failed", JOptionPane.WARNING_MESSAGE);
+                }   
+                else
+                {                
+                    try {
+                        query = "INSERT INTO Person (\n" +
+                            "Name,\n" +
+                            "Address,\n" +
+                            "Contact,\n" +
+                            "Course,\n" +
+                            "Category\n" +
+                            ") Values(?,?,?,?,?)";
+                        PreparedStatement ps = parking.con.prepareStatement(query);
+                        ps.setString(1, names);
+                        ps.setString(2, addr);
+                        ps.setString(3, cont);
+                        ps.setString(4, cour);
+                        ps.setString(5, types);
+                        ps.execute();
+
+                        String int_id = String.format("%04d",count("Guest"));
+                        //
+                        String pquery = "SELECT PersonID FROM Person WHERE Name = '"+names+"'";
+                        ResultSet rs = st.executeQuery(pquery);
+                        int personid = 0;
                         while(rs.next())
                         {
-                            id = rs.getInt("count(*)") + 1;
+                            personid = rs.getInt("PersonID");
                         }
-                        String int_id = String.format("%04d",id);
-                        System.out.println(int_id);
-                        String insert_query = "INSERT INTO Faculty(id, Name, Address, Contact, VehicleNumber) VALUES(?,?,?,?,?)";
-                        PreparedStatement ps = parking.con.prepareStatement(insert_query);
-                        ps.setString(1, "EMP"+int_id);
-                        ps.setString(2, cap_names);
-                        ps.setString(3, addr);
-                        ps.setString(4, cont);
-                        ps.setString(5, veh);                        
-                        ps.executeUpdate();
-                        JOptionPane.showMessageDialog(rootPane, "Registration Successful", "Success", JOptionPane.PLAIN_MESSAGE);
-                    }   
-                    catch(SQLException e)
-                    {
-                        System.out.println(e);
-                    }
-                }
-                if("Guest".equals(type.getSelectedItem().toString()))
-                {
-                    try
-                    {                                        
-                        String query = "SELECT count(*) FROM Guest";
-                        ResultSet rs = st.executeQuery(query);
-                        int id = 0;
-                        while(rs.next())
-                        {
-                            id = rs.getInt("count(*)") + 1;
-                        }
-                        String int_id = String.format("%04d",id);
-                        System.out.println(int_id);
-                        String insert_query = "INSERT INTO Guest(id, Name, Address, Contact, VehicleNumber) VALUES(?,?,?,?,?)";
-                        PreparedStatement ps = parking.con.prepareStatement(insert_query);
+                        System.out.println(personid);
+                        query = "INSERT INTO Guest (\n" +
+                            "ID, \n"+
+                            "Name,\n" +
+                            "Address,\n" +
+                            "Contact,\n" +                                
+                            "Category,\n" +
+                            "PersonID\n"+
+                            ") Values(?,?,?,?,?,?)";
+                        ps = parking.con.prepareStatement(query);
                         ps.setString(1, "GUE"+int_id);
-                        ps.setString(2, cap_names);
+                        ps.setString(2, names);
                         ps.setString(3, addr);
-                        ps.setString(4, cont);
-                        ps.setString(5, veh);                        
+                        ps.setString(4, cont);                            
+                        ps.setString(5, types);
+                        ps.setInt(6, personid);
                         ps.executeUpdate();
-                        JOptionPane.showMessageDialog(rootPane, "Registration Successful", "Success", JOptionPane.PLAIN_MESSAGE);
-                    }   
-                    catch(SQLException e)
-                    {
-                        System.out.println(e);
+                        JOptionPane.showMessageDialog(rootPane, "Registration Successful");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
+                }                
             }
         }
-        SwingUtilities.updateComponentTreeUI(this);
+        //
         name.setText(null);
-        address.setText(null);
-        vehicleNumber.setText(null);
+        address.setText(null);        
         contact.setText(null);
         course.setText(null);               
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -359,24 +399,6 @@ public class Registration extends javax.swing.JFrame {
             name.setEditable(true);
         }
     }//GEN-LAST:event_nameKeyPressed
-
-    private void vehicleNumberKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_vehicleNumberKeyPressed
-        // TODO add your handling code here:
-        String veh = vehicleNumber.getText();
-        int length = veh.length();
-            if(length < 10)
-            {
-                vehicleNumber.setEditable(true);
-            }
-            else
-            {
-                vehicleNumber.setEditable(false);
-            }
-            if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
-            {
-                vehicleNumber.setEditable(true);
-            }
-    }//GEN-LAST:event_vehicleNumberKeyPressed
 
     private void contactKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactKeyPressed
         // TODO add your handling code here:
@@ -469,12 +491,10 @@ public class Registration extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField name;
     private javax.swing.JComboBox type;
-    private javax.swing.JTextField vehicleNumber;
     // End of variables declaration//GEN-END:variables
 }
