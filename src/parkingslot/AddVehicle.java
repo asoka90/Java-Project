@@ -142,6 +142,8 @@ public class AddVehicle extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -332,7 +334,7 @@ public class AddVehicle extends javax.swing.JFrame {
         // TODO add your handling code here:
         String get = idText.getText();
         int length = get.length();
-        if(length < 7)
+        if(length < 10)
         {
             idText.setEditable(true);
         }

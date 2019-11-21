@@ -260,7 +260,7 @@ public class Registration extends javax.swing.JFrame {
                     ps.setString(6, types);
                     ps.setInt(7, personid);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(rootPane, "Registration Successful");
+                    JOptionPane.showMessageDialog(rootPane, "Registration Successful \nYour ID is "+ "STU"+int_id);
                 } catch (SQLException ex) {
                     Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -318,7 +318,7 @@ public class Registration extends javax.swing.JFrame {
                         ps.setString(5, types);
                         ps.setInt(6, personid);
                         ps.executeUpdate();
-                        JOptionPane.showMessageDialog(rootPane, "Registration Successful");
+                        JOptionPane.showMessageDialog(rootPane, "Registration Successful\nYour ID is "+ "ER"+int_id);
                     } catch (SQLException ex) {
                         Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -374,7 +374,7 @@ public class Registration extends javax.swing.JFrame {
                         ps.setString(5, types);
                         ps.setInt(6, personid);
                         ps.executeUpdate();
-                        JOptionPane.showMessageDialog(rootPane, "Registration Successful");
+                        JOptionPane.showMessageDialog(rootPane, "Registration Successful\nYour ID is "+ "GUE"+int_id);
                     } catch (SQLException ex) {
                         Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
                     }
