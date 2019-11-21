@@ -6,6 +6,7 @@
 package parkingslot;
 
 import com.sun.glass.events.KeyEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,7 +25,7 @@ public class AddVehicle extends javax.swing.JFrame {
      */
     ParkingSlot parking = new ParkingSlot();
     public AddVehicle() {       
-        System.out.println(checkID("STU0001"));
+        //System.out.println(getName("STU0001"));
         initComponents();
     }
     
@@ -49,11 +50,80 @@ public class AddVehicle extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
             }
+            finally{
+                try {
+                    st.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             x++;
         }
         return false;
     }
-       
+    
+    public String getCategory(String ID)
+    {
+        String category = "";
+        Statement st = parking.connectDB();
+        String tableName[] = {"Student", "Faculty", "Guest"};
+        int x = 0;
+        while(x < tableName.length)
+        {
+            String query = "SELECT Category FROM "+tableName[x]+" WHERE ID = '"+ID+"'";
+            try {
+                ResultSet rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                    category = rs.getString("Category");                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally
+            {
+                try {
+                    st.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            x++;
+        }
+        return category;
+    }
+    
+    public String getName(String ID)
+    {
+        String name = "";
+        Statement st = parking.connectDB();
+        String tableName[] = {"Student", "Faculty", "Guest"};
+        int x = 0;
+        while(x < tableName.length)
+        {
+            String query = "SELECT Name FROM "+tableName[x]+" WHERE ID = '"+ID+"'";
+            try {
+                ResultSet rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                    name = rs.getString("Name");                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally
+            {
+                try {
+                    st.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            x++;
+        }
+        return name;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,12 +250,82 @@ public class AddVehicle extends javax.swing.JFrame {
         Statement st = parking.connectDB();
         if(checkID(id))
         {
-            
+            if("Student".equals(getCategory(id)))
+            {
+                String query = "INSERT INTO Vehicle(StudentID, Name, Type, [Vehicle Number]) VALUES(?,?,?,?)";
+                try {
+                    PreparedStatement ps = parking.con.prepareStatement(query);
+                    ps.setString(1, id);
+                    ps.setString(2, getName(id));
+                    ps.setString(3, vehicleType);
+                    ps.setString(4, vehicleNumber);
+                    ps.execute();
+                    JOptionPane.showMessageDialog(rootPane, "Registration of vehicle succesful");
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                finally
+                {
+                    try {
+                        st.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            else if("Faculty".equals(getCategory(id)))
+            {
+                String query = "INSERT INTO Vehicle(FacultyID, Name, Type, [Vehicle Number]) VALUES(?,?,?,?)";
+                try {
+                    PreparedStatement ps = parking.con.prepareStatement(query);
+                    ps.setString(1, id);
+                    ps.setString(2, getName(id));
+                    ps.setString(3, vehicleType);
+                    ps.setString(4, vehicleNumber);
+                    ps.execute();
+                    JOptionPane.showMessageDialog(rootPane, "Registration of vehicle succesful");
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                finally
+                {
+                    try {
+                        st.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            else if("Guest".equals(getCategory(id)))
+            {
+                String query = "INSERT INTO Vehicle(GuestID, Name, Type, [Vehicle Number]) VALUES(?,?,?,?)";
+                try {
+                    PreparedStatement ps = parking.con.prepareStatement(query);
+                    ps.setString(1, id);
+                    ps.setString(2, getName(id));
+                    ps.setString(3, vehicleType);
+                    ps.setString(4, vehicleNumber);
+                    ps.execute();
+                    JOptionPane.showMessageDialog(rootPane, "Registration of vehicle succesful");
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                finally
+                {
+                    try {
+                        st.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }                
+            }
         }
         else
         {
             JOptionPane.showMessageDialog(rootPane, "ID not found", "ID Error", JOptionPane.ERROR_MESSAGE);
         }
+        idText.setText(null);
+        vehiclenumberText.setText(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idTextKeyPressed

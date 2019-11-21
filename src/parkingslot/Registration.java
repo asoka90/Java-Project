@@ -34,6 +34,7 @@ public class Registration extends javax.swing.JFrame {
         {
             id = rs.getInt("CountID");
         }
+        st.close();
         return id+1;
     }
     /**
@@ -229,7 +230,7 @@ public class Registration extends javax.swing.JFrame {
                     ps.setString(3, cont);
                     ps.setString(4, cour);
                     ps.setString(5, types);
-                    ps.execute();
+                    ps.executeUpdate();
 
                     String int_id = String.format("%04d",count("Student"));
                     //
@@ -377,6 +378,14 @@ public class Registration extends javax.swing.JFrame {
                     } catch (SQLException ex) {
                         Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    finally
+                    {
+                        try {
+                            st.close();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }                    
                 }                
             }
         }
@@ -443,6 +452,7 @@ public class Registration extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
+        
         new MenuFrame().setVisible(true);
 
     }//GEN-LAST:event_formWindowClosed

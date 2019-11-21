@@ -25,8 +25,7 @@ public class ParkingSlot {
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:C:\\Users\\Win10\\Documents\\NetBeansProjects\\ParkingSlot\\db\\systemDB.db";
             con = DriverManager.getConnection(url);
-            st = con.createStatement();
-            System.out.println("Success");
+            st = con.createStatement();            
         }
         catch(Exception e)
         {
