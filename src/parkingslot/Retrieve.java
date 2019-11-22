@@ -38,9 +38,12 @@ public class Retrieve extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         ref = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        vehi = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox();
+        jComboBox6 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -52,187 +55,88 @@ public class Retrieve extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel1.setText("Reference Code");
+        jLabel1.setText("ID:");
 
         ref.setColumns(20);
         ref.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        ref.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                refKeyReleased(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel2.setText("Vehicle No.");
-
-        vehi.setColumns(20);
-        vehi.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        vehi.setEnabled(false);
 
         jButton1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jButton1.setText("Retrieve a vehicle");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jButton1.setText("Retrieve vehicle");
+
+        jPanel3.setBackground(new java.awt.Color(255, 153, 51));
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel2.setText("Vehicle Type:");
+
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel3.setText("Vehicle Number:");
+
+        jComboBox5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBox5, jComboBox6});
+
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(vehi, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(ref, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(64, 64, 64))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(ref, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1))
+                    .addComponent(jLabel1))
+                .addGap(22, 22, 22)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ref, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(vehi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(35, 35, 35)
                 .addComponent(jButton1)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Statement st = parking.connectDB();
-        String query = "SELECT id, Slot\n" +
-                        "  FROM Faculty\n" +
-                        "UNION\n" +
-                        "SELECT id, Slot\n" +
-                        "  FROM Guest\n" +
-                        "UNION\n" +
-                        "SELECT id, Slot\n" +
-                        "  FROM Student;";
-        String ref_code = ref.getText();
-        ref_code = ref_code.toUpperCase();
-        boolean valid = false;
-        try {
-            ResultSet rs = st.executeQuery(query);
-            while(rs.next())
-            {
-                String id = rs.getString("id");   
-                int slot = rs.getInt("Slot");
-                if(ref_code.equals(id))
-                {
-                    if(slot == 0)
-                    {
-                        JOptionPane.showMessageDialog(rootPane, "Vehicle is not parked", "Error", JOptionPane.WARNING_MESSAGE);
-                        return;
-                    }
-                    else
-                    {                           
-                            String que_table = "SELECT name FROM sqlite_master WHERE type='table' AND name is not 'sqlite_sequence'";
-                            ResultSet rsque = st.executeQuery(que_table);
-                            while(rsque.next())
-                            {
-                                String s = rsque.getString("name");
-                                System.out.println(s);
-                            }
-//                            String upd_query = "UPDATE "+tableName+" ";                            
-                        valid =true;
-                    }
-                }                
-            }
-            
-            if(valid)
-            {
-                JOptionPane.showMessageDialog(rootPane, "Vehicle park move into slot successfuly");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(rootPane, "Reference code does not exist", "Invalid", JOptionPane.WARNING_MESSAGE);
-            }    
-        } catch (SQLException ex) {
-            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ref.setText(null);
-        vehi.setText(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void refKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_refKeyReleased
-        // TODO add your handling code here:
-        String ref_c = ref.getText();
-        int length = ref_c.length();
-            if(length < 7)
-            {
-                ref.setEditable(true);
-            }
-            else
-            {
-                ref.setEditable(false);
-            }
-            if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
-            {
-                ref.setEditable(true);
-            }
-        Statement st = parking.connectDB();
-        String query = "SELECT id\n" +
-                        "  FROM Faculty\n" +
-                        "UNION\n" +
-                        "SELECT id\n" +
-                        "  FROM Guest\n" +
-                        "UNION\n" +
-                        "SELECT id\n" +
-                        "  FROM Student;";
-        String ref_code = ref.getText();
-        ref_code = ref_code.toUpperCase();
-        try {
-            ResultSet rs = st.executeQuery(query);
-            while(rs.next())
-            {
-                String id = rs.getString("id");               
-                if(ref_code.equals(id))
-                {
-                    String get_vehi = "SELECT VehicleNumber\n" +
-                                        "  FROM Faculty\n" +
-                                        " WHERE id = '"+id+"'\n" +
-                                        "UNION\n" +
-                                        "SELECT VehicleNumber\n" +
-                                        "  FROM Guest\n" +
-                                        " WHERE id = '"+id+"'\n" +
-                                        "UNION\n" +
-                                        "SELECT VehicleNumber\n" +
-                                        "  FROM Student\n" +
-                                        " WHERE id = '"+id+"';";
-                    ResultSet gs = st.executeQuery(get_vehi);
-                    while(gs.next())
-                    {
-                        String c = gs.getString("VehicleNumber");
-                        System.out.println(c);   
-                        vehi.setText(c);
-                    }
-                }
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_refKeyReleased
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
@@ -276,9 +180,22 @@ public class Retrieve extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JComboBox jComboBox5;
+    private javax.swing.JComboBox jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField ref;
-    private javax.swing.JTextField vehi;
     // End of variables declaration//GEN-END:variables
 }

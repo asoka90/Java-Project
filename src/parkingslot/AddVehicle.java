@@ -262,6 +262,15 @@ public class AddVehicle extends javax.swing.JFrame {
                     ps.setString(3, vehicleType);
                     ps.setString(4, vehicleNumber);
                     ps.execute();
+                    
+                    //Insert Student Vehicle
+                    query = "INSERT INTO [Student Vehicle](Name, Type, [Vehicle Number], ID) VALUES(?,?,?,?)"; 
+                    ps = parking.con.prepareStatement(query);
+                    ps.setString(1, getName(id));
+                    ps.setString(2, vehicleType);
+                    ps.setString(3, vehicleNumber);
+                    ps.setString(4, id);
+                    ps.execute();
                     JOptionPane.showMessageDialog(rootPane, "Registration of vehicle succesful");
                 } catch (SQLException ex) {
                     Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
@@ -285,6 +294,14 @@ public class AddVehicle extends javax.swing.JFrame {
                     ps.setString(3, vehicleType);
                     ps.setString(4, vehicleNumber);
                     ps.execute();
+                    
+                    query = "INSERT INTO [Faculty Vehicle](Name, Type, [Vehicle Number], ID) VALUES(?,?,?,?)"; 
+                    ps = parking.con.prepareStatement(query);
+                    ps.setString(1, getName(id));
+                    ps.setString(2, vehicleType);
+                    ps.setString(3, vehicleNumber);
+                    ps.setString(4, id);
+                    ps.execute();
                     JOptionPane.showMessageDialog(rootPane, "Registration of vehicle succesful");
                 } catch (SQLException ex) {
                     Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
@@ -307,6 +324,14 @@ public class AddVehicle extends javax.swing.JFrame {
                     ps.setString(2, getName(id));
                     ps.setString(3, vehicleType);
                     ps.setString(4, vehicleNumber);
+                    ps.execute();
+                    
+                    query = "INSERT INTO [Guest Vehicle](Name, Type, [Vehicle Number], ID) VALUES(?,?,?,?)"; 
+                    ps = parking.con.prepareStatement(query);
+                    ps.setString(1, getName(id));
+                    ps.setString(2, vehicleType);
+                    ps.setString(3, vehicleNumber);
+                    ps.setString(4, id);
                     ps.execute();
                     JOptionPane.showMessageDialog(rootPane, "Registration of vehicle succesful");
                 } catch (SQLException ex) {
