@@ -6,6 +6,8 @@
 package parkingslot;
 
 import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,10 +29,74 @@ public class Park extends javax.swing.JFrame {
      * Creates new form Park
      */
     ParkingSlot parking = new ParkingSlot();
-    public Park() {
+    public Park() {        
         initComponents();
     }
-
+    
+    public void action_type()
+    {
+        Statement st = parking.connectDB();
+        String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
+        int t = 0;        
+        while(t < tableName.length)
+        {
+            //Vehicle Number
+            String query = "SELECT Type FROM ["+tableName[t]+"] WHERE ID = '"+idText.getText()+"' AND [Vehicle Number] = '"+vehicleNumberBox.getSelectedItem().toString()+"'";
+            try {
+                ResultSet rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                    String vehType = rs.getString("Type");
+                    vehicleTypeText.setText(vehType);                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally
+            {
+                try {
+                    st.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }                        
+            t++;
+        }
+    }
+    public int count(String ID)
+    {
+        int cnt = 0;
+        Statement st = parking.connectDB();
+        String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
+        int t = 0;
+        while( t < tableName.length)
+        {
+        String query = "SELECT count(ID) AS CountID FROM ["+tableName[t]+"] WHERE ID = '"+ID+"'";
+            try {
+                ResultSet rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                    int idcount = rs.getInt("CountID");
+                    if(idcount != 0)
+                    {
+                        cnt = idcount;
+                    }                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally
+            {
+                try {
+                    st.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        t++;
+        }
+        return cnt;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,8 +112,8 @@ public class Park extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        vehicleTypeBox = new javax.swing.JComboBox();
         vehicleNumberBox = new javax.swing.JComboBox();
+        vehicleTypeText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -80,70 +146,79 @@ public class Park extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setText("Vehicle Number:");
 
-        vehicleTypeBox.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-
         vehicleNumberBox.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehicleNumberBox.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+                    action_type();
+                }
+            })
+            ;
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+            vehicleTypeText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+            vehicleTypeText.setEnabled(false);
+
+            javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+            jPanel1.setLayout(jPanel1Layout);
+            jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(62, 62, 62)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(vehicleTypeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(vehicleNumberBox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(59, Short.MAX_VALUE))
+            );
+
+            jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {vehicleNumberBox, vehicleTypeText});
+
+            jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(35, 35, 35)
                     .addComponent(jLabel3)
-                    .addComponent(vehicleTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vehicleNumberBox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(vehicleNumberBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(13, 13, 13)
+                    .addComponent(jLabel2)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(vehicleTypeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(55, Short.MAX_VALUE))
+            );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {vehicleNumberBox, vehicleTypeBox});
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(32, 32, 32)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addComponent(jLabel1))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(42, 42, 42)
+                    .addComponent(jLabel1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(35, 35, 35)
+                    .addComponent(jButton1)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
 
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(vehicleNumberBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(vehicleTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton1)
-                .addContainerGap(57, Short.MAX_VALUE))
-        );
-
-        pack();
-        setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+            pack();
+            setLocationRelativeTo(null);
+        }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
@@ -166,9 +241,41 @@ public class Park extends javax.swing.JFrame {
         {
             idText.setEditable(true);
         }
+        idText.setText(get.toUpperCase());
         
         //Get Vehicle Number and Type
-        
+        Statement st = parking.connectDB();
+        String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
+        int t = 0;
+        ArrayList<String> vehicleNumbList = new ArrayList<String>();
+        while(t < tableName.length)
+        {
+            //Vehicle Number
+            String query = "SELECT [Vehicle Number] AS Number FROM ["+tableName[t]+"] WHERE ID = '"+idText.getText()+"'";
+            try {
+                ResultSet rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                    vehicleNumbList.add(rs.getString("Number"));
+                    System.out.println(vehicleNumbList);
+                    if(!vehicleNumbList.isEmpty())
+                    {
+                        vehicleNumberBox.setModel(new DefaultComboBoxModel(vehicleNumbList.toArray()));
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally
+            {
+                try {
+                    st.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }                        
+            t++;
+        }
     }//GEN-LAST:event_idTextKeyReleased
 
     /**
@@ -214,6 +321,6 @@ public class Park extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox vehicleNumberBox;
-    private javax.swing.JComboBox vehicleTypeBox;
+    private javax.swing.JTextField vehicleTypeText;
     // End of variables declaration//GEN-END:variables
 }
