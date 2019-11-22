@@ -247,22 +247,21 @@ public class Park extends javax.swing.JFrame {
         Statement st = parking.connectDB();
         String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
         int t = 0;
+        String id = null;
         ArrayList<String> vehicleNumbList = new ArrayList<String>();
         while(t < tableName.length)
         {
             //Vehicle Number
-            String query = "SELECT [Vehicle Number] AS Number FROM ["+tableName[t]+"] WHERE ID = '"+idText.getText()+"'";
+            String query = "SELECT [Vehicle Number] AS Number, ID  FROM ["+tableName[t]+"] WHERE ID = '"+idText.getText()+"'";
             try {
-                ResultSet rs = st.executeQuery(query);
+                ResultSet rs = st.executeQuery(query);               
                 while(rs.next())
                 {
+                    id = rs.getString("ID");                                        
                     vehicleNumbList.add(rs.getString("Number"));
-                    System.out.println(vehicleNumbList);
-                    if(!vehicleNumbList.isEmpty())
-                    {
-                        vehicleNumberBox.setModel(new DefaultComboBoxModel(vehicleNumbList.toArray()));
-                    }
-                }
+                }                
+                System.out.println(vehicleNumbList);                        
+                vehicleNumberBox.setModel(new DefaultComboBoxModel(vehicleNumbList.toArray()));                                                                                  
             } catch (SQLException ex) {
                 Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -273,8 +272,20 @@ public class Park extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }                        
-            t++;
+            }                                 
+            t++;            
+        }
+        if(get != id)
+        {         
+            try
+            {
+                vehicleNumberBox.removeAll();
+            }
+            catch(NullPointerException e)
+            {
+                
+            }
+            vehicleTypeText.setText(null);
         }
     }//GEN-LAST:event_idTextKeyReleased
 
