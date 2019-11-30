@@ -247,6 +247,21 @@ public class Retrieve extends javax.swing.JFrame {
         String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
         int t = 0;
         String id = null;
+        
+        //Get vehicle number from slots
+        ArrayList<String> slotVehicle = new ArrayList<String>();
+        String slotQuery = "SELECT [Vehicle Number] FROM Slot";         
+        try {
+            ResultSet srs = st.executeQuery(slotQuery);
+            while(srs.next())
+            {
+                slotVehicle.add(srs.getString("Vehicle Number"));
+            }
+            System.out.println(slotVehicle);
+        } catch (SQLException ex) {
+            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         ArrayList<String> vehicleNumbList = new ArrayList<String>();
         while(t < tableName.length)
         {
@@ -258,11 +273,20 @@ public class Retrieve extends javax.swing.JFrame {
                 {
                     id = rs.getString("ID");                                        
                     vehicleNumbList.add(rs.getString("Number"));
-                }                
-                System.out.println(vehicleNumbList);                        
-                vehicleNumberBox.setModel(new DefaultComboBoxModel(vehicleNumbList.toArray()));                                                                                  
+                }
+//                slotVehicle.removeAll(vehicleNumbList);
+                
+                System.out.println(slotVehicle);
+                vehicleNumbList.removeAll(slotVehicle);
+                System.out.println(vehicleNumbList);
+//                if(id.equals(get))
+//                    vehicleNumberBox.setModel(new DefaultComboBoxModel(slotVehicle.toArray()));                  
             } catch (SQLException ex) {
                 Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch(NullPointerException e)
+            {
+                
             }
             finally
             {
@@ -273,21 +297,7 @@ public class Retrieve extends javax.swing.JFrame {
                 }
             }                                 
             t++;            
-        }
-        if(get != id)
-        {         
-            try
-            {
-                vehicleNumberBox.removeAll();
-            }
-            catch(NullPointerException e)
-            {
-                
-            }
-            vehicleTypeText.setText(null);
-        }
-        
-        System.out.println(id + " " + get);
+        }        
     }//GEN-LAST:event_idTextKeyReleased
 
     /**

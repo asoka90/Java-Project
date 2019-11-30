@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +31,7 @@ public class Park extends javax.swing.JFrame {
      */
     ParkingSlot parking = new ParkingSlot();
     public Park() {        
+//        System.out.println(getName("GUE0001","ASD-123FV"));
         initComponents();
     }
     
@@ -97,6 +99,32 @@ public class Park extends javax.swing.JFrame {
         }
         return cnt;
     }
+    
+    public String getName(String ID, String vehicleNumber)
+    {
+        String name = "";
+        Statement st = parking.connectDB();                
+        String query = "SELECT Name FROM Vehicle WHERE (coalesce(StudentID, '') || \"\" || coalesce(FacultyID, '') || \"\" || (coalesce(GuestID, '') ) ) = '"+ID+"' AND [Vehicle Number] = '"+vehicleNumber+"'";
+        try {
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next())
+            {
+                name = rs.getString("Name");                    
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            try {
+                st.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AddVehicle.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }           
+        return name;
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,6 +165,11 @@ public class Park extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jButton1.setText("Park vehicle");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 153, 51));
 
@@ -248,6 +281,19 @@ public class Park extends javax.swing.JFrame {
         String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
         int t = 0;
         String id = null;
+        //Get vehicle number from slots
+        ArrayList<String> slotVehicle = new ArrayList<String>();
+        String slotQuery = "SELECT [Vehicle Number] FROM Slot";         
+        try {
+            ResultSet srs = st.executeQuery(slotQuery);
+            while(srs.next())
+            {
+                slotVehicle.add(srs.getString("Vehicle Number"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         ArrayList<String> vehicleNumbList = new ArrayList<String>();
         while(t < tableName.length)
         {
@@ -260,7 +306,7 @@ public class Park extends javax.swing.JFrame {
                     id = rs.getString("ID");                                        
                     vehicleNumbList.add(rs.getString("Number"));
                 }                
-                System.out.println(vehicleNumbList);                        
+                vehicleNumbList.removeAll(slotVehicle);                
                 vehicleNumberBox.setModel(new DefaultComboBoxModel(vehicleNumbList.toArray()));                                                                                  
             } catch (SQLException ex) {
                 Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
@@ -288,6 +334,90 @@ public class Park extends javax.swing.JFrame {
             vehicleTypeText.setText(null);
         }
     }//GEN-LAST:event_idTextKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:  
+        vehicleNumberBox.removeAll();
+        Statement st = parking.connectDB();
+        //Init numbers
+        ArrayList<Integer> numIntegers = new ArrayList<Integer>();
+        ArrayList<Integer> slotNumbers = new ArrayList<Integer>();
+        for(int x = 1 ; x <=50 ;x++)
+        {
+            numIntegers.add(x);
+        }        
+        String count_query = "SELECT [Slot Number]\n" +
+                                "  FROM Slot\n" +
+                                " WHERE [Slot Number] IS NOT NULL;";
+        try {
+            ResultSet slotrs = st.executeQuery(count_query);
+            while(slotrs.next())
+            {
+                slotNumbers.add(slotrs.getInt("Slot Number"));
+            }
+            numIntegers.removeAll(slotNumbers);
+            System.out.println(numIntegers);
+        } catch (SQLException ex) {
+            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try
+        {
+            String id = idText.getText();
+            String vehicleNumber = vehicleNumberBox.getSelectedItem().toString();
+            String vehicleType = vehicleTypeText.getText();
+            String name = getName(id, vehicleNumber);            
+            Random ran = new Random();            
+            int random_slot = ran.nextInt((numIntegers.size()));            
+            if(random_slot != 0)
+            {
+                if(!vehicleType.equals(""))
+                {
+                    //Set Slot
+                    System.out.println(random_slot);
+                    String parkVehicleQuery = "INSERT INTO Slot([Slot Number], ID, Name, Type, [Vehicle Number]) VALUES(?,?,?,?,?)";                    
+                    try {
+                        PreparedStatement ps = parking.con.prepareStatement(parkVehicleQuery);
+                        ps.setInt(1, random_slot);
+                        ps.setString(2, id);
+                        ps.setString(3, name);
+                        ps.setString(4, vehicleType);
+                        ps.setString(5, vehicleNumber);
+                        ps.executeUpdate();                        
+                        JOptionPane.showMessageDialog(rootPane, "Park Successful");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    finally
+                    {
+                        try {
+                            st.close();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(rootPane, "Vehicle type is not filled up", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }                                   
+        }
+        catch(NullPointerException e)
+        {            
+            JOptionPane.showMessageDialog(rootPane, "ID does not exist");
+        }
+        //Reset all fields
+        try
+        {
+            DefaultComboBoxModel model = (DefaultComboBoxModel) vehicleNumberBox.getModel();
+            idText.setText(null);
+            vehicleTypeText.setText(null);
+            model.removeAllElements();
+        }
+        catch(NullPointerException e)
+        {            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
