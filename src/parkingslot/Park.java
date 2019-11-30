@@ -386,6 +386,7 @@ public class Park extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(rootPane, "Park Successful");
                     } catch (SQLException ex) {
                         Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(rootPane, "Park Successful", "Error slot input", JOptionPane.ERROR_MESSAGE);
                     }
                     finally
                     {
