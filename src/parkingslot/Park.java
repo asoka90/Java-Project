@@ -12,14 +12,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-
+import javax.swing.ComboBoxModel;
+import javax.swing.text.html.parser.DTDConstants;
 /**
  *
  * @author Win10
@@ -30,40 +41,47 @@ public class Park extends javax.swing.JFrame {
      * Creates new form Park
      */
     ParkingSlot parking = new ParkingSlot();
+    ArrayList<String> vehicleNumbList = new ArrayList<String>();
     public Park() {        
-//        System.out.println(getName("GUE0001","ASD-123FV"));
+//        System.out.println(getName("GUE0001","ASD-123FV"));        
         initComponents();
-    }
-    
-    public void action_type()
+    }    
+    public void action_type(String vehNUmber)
     {
-        Statement st = parking.connectDB();
-        String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
-        int t = 0;        
-        while(t < tableName.length)
+        Statement st = parking.connectDB();        
+        int t = 0;                
+        //Vehicle Number
+        String query = "SELECT Type FROM Vehicle WHERE (coalesce(StudentID, '') || \"\" || coalesce(FacultyID, '') || \"\" || (coalesce(GuestID, '') ) ) = '"+idText.getText()+"' AND [Vehicle Number] = '"+vehNUmber+"'";
+        try {
+            ResultSet rs = st.executeQuery(query);
+            String vehType = "";
+            while(rs.next())
+            {
+                vehType = rs.getString("Type");
+            }
+            if(!vehType.equals(null))
+            {
+            vehicleTypeText.setText(vehType);  
+            }
+            else
+            {
+                vehicleTypeText.setText("");  
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(NullPointerException e)
+        {                
+        }
+        finally
         {
-            //Vehicle Number
-            String query = "SELECT Type FROM ["+tableName[t]+"] WHERE ID = '"+idText.getText()+"' AND [Vehicle Number] = '"+vehicleNumberBox.getSelectedItem().toString()+"'";
             try {
-                ResultSet rs = st.executeQuery(query);
-                while(rs.next())
-                {
-                    String vehType = rs.getString("Type");
-                    vehicleTypeText.setText(vehType);                    
-                }
+                st.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
             }
-            finally
-            {
-                try {
-                    st.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }                        
-            t++;
-        }
+        }                        
+        t++;        
     }
     public int count(String ID)
     {
@@ -144,6 +162,7 @@ public class Park extends javax.swing.JFrame {
         vehicleTypeText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Parking Slot System");
         setResizable(false);
         setSize(new java.awt.Dimension(100, 100));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -184,7 +203,13 @@ public class Park extends javax.swing.JFrame {
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                    action_type();
+                    System.out.print("asdasd");
+                    try
+                    {
+                        action_type(vehicleNumberBox.getSelectedItem().toString());
+                    }
+                    catch(NullPointerException ee)
+                    {}
                 }
             })
             ;
@@ -258,8 +283,9 @@ public class Park extends javax.swing.JFrame {
         new MenuFrame().setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
+    @SuppressWarnings("null")
     private void idTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idTextKeyReleased
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
         String get = idText.getText();
         int length = get.length();
         if(length < 10)
@@ -277,61 +303,32 @@ public class Park extends javax.swing.JFrame {
         idText.setText(get.toUpperCase());
         
         //Get Vehicle Number and Type
-        Statement st = parking.connectDB();
-        String tableName[] = {"Student Vehicle", "Faculty Vehicle", "Guest Vehicle"};
-        int t = 0;
+        Statement st = parking.connectDB();        
         String id = null;
-        //Get vehicle number from slots
-        ArrayList<String> slotVehicle = new ArrayList<String>();
-        String slotQuery = "SELECT [Vehicle Number] FROM Slot";         
+        //Get vehicle number from slots       
+        String slotQuery = "SELECT (coalesce(StudentID, '') || \"\" || coalesce(FacultyID, '') || \"\" || (coalesce(GuestID, '') ) ) AS ID, [Vehicle Number]\n" +
+                            "  FROM Vehicle\n" +
+                            "  WHERE (coalesce(StudentID, '') || \"\" || coalesce(FacultyID, '') || \"\" || (coalesce(GuestID, '') ) ) = '"+idText.getText()+"'";         
         try {
             ResultSet srs = st.executeQuery(slotQuery);
             while(srs.next())
             {
-                slotVehicle.add(srs.getString("Vehicle Number"));
+                id = srs.getString("ID");   
+                System.out.println(srs.getString("Vehicle Number"));
+                vehicleNumberBox.addItem(srs.getString("Vehicle Number"));                     
             }
         } catch (SQLException ex) {
             Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ArrayList<String> vehicleNumbList = new ArrayList<String>();
-        while(t < tableName.length)
-        {
-            //Vehicle Number
-            String query = "SELECT [Vehicle Number] AS Number, ID  FROM ["+tableName[t]+"] WHERE ID = '"+idText.getText()+"'";
-            try {
-                ResultSet rs = st.executeQuery(query);               
-                while(rs.next())
-                {
-                    id = rs.getString("ID");                                        
-                    vehicleNumbList.add(rs.getString("Number"));
-                }                
-                vehicleNumbList.removeAll(slotVehicle);                
-                vehicleNumberBox.setModel(new DefaultComboBoxModel(vehicleNumbList.toArray()));                                                                                  
-            } catch (SQLException ex) {
-                Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            finally
-            {
-                try {
-                    st.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }                                 
-            t++;            
-        }
-        if(get != id)
-        {         
+        }                
+        if(!get.equals(id))
+        {                     
             try
             {
-                vehicleNumberBox.removeAll();
+                vehicleNumberBox.removeAllItems();
+                vehicleTypeText.setText("");
             }
-            catch(NullPointerException e)
-            {
-                
-            }
-            vehicleTypeText.setText(null);
+            catch(Exception e)
+            {}   
         }
     }//GEN-LAST:event_idTextKeyReleased
 
@@ -347,8 +344,12 @@ public class Park extends javax.swing.JFrame {
             numIntegers.add(x);
         }        
         String count_query = "SELECT [Slot Number]\n" +
-                                "  FROM Slot\n" +
-                                " WHERE [Slot Number] IS NOT NULL;";
+                            "  FROM Slot\n" +
+                            " WHERE ID != '''Available''' AND \n" +
+                            "       Type != '''Available''' AND \n" +
+                            "       [Vehicle Number] != '''Available''' AND \n" +
+                            "       Name != '''Available''' AND \n" +
+                            "       [Date Parked] != '''Available''';";
         try {
             ResultSet slotrs = st.executeQuery(count_query);
             while(slotrs.next())
@@ -373,20 +374,22 @@ public class Park extends javax.swing.JFrame {
                 if(!vehicleType.equals(""))
                 {
                     //Set Slot
-                    System.out.println(random_slot);
-                    String parkVehicleQuery = "INSERT INTO Slot([Slot Number], ID, Name, Type, [Vehicle Number]) VALUES(?,?,?,?,?)";                    
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = new Date();
+                    String dt = dateFormat.format(date);
+                    String parkVehicleQuery = "UPDATE Slot SET "
+                                            + "ID = '"+id+"',\n" +
+                                            "       Name = '"+name+"',\n" +
+                                            "       Type = '"+vehicleType+"',\n" +
+                                            "       [Vehicle Number] = '"+vehicleNumber+"',\n" +
+                                            "       [Date Parked] = '"+dt+"' WHERE [Slot Number] = "+random_slot+"";                    
                     try {
-                        PreparedStatement ps = parking.con.prepareStatement(parkVehicleQuery);
-                        ps.setInt(1, random_slot);
-                        ps.setString(2, id);
-                        ps.setString(3, name);
-                        ps.setString(4, vehicleType);
-                        ps.setString(5, vehicleNumber);
+                        PreparedStatement ps = parking.con.prepareStatement(parkVehicleQuery);                       
                         ps.executeUpdate();                        
                         JOptionPane.showMessageDialog(rootPane, "Park Successful");
                     } catch (SQLException ex) {
-                        Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
-                        JOptionPane.showMessageDialog(rootPane, "Park Successful", "Error slot input", JOptionPane.ERROR_MESSAGE);
+//                        Logger.getLogger(Park.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(rootPane, "Vehicle already parked", "Error slot input", JOptionPane.ERROR_MESSAGE);
                     }
                     finally
                     {
@@ -407,17 +410,18 @@ public class Park extends javax.swing.JFrame {
         {            
             JOptionPane.showMessageDialog(rootPane, "ID does not exist");
         }
-        //Reset all fields
-        try
-        {
-            DefaultComboBoxModel model = (DefaultComboBoxModel) vehicleNumberBox.getModel();
-            idText.setText(null);
-            vehicleTypeText.setText(null);
-            model.removeAllElements();
-        }
-        catch(NullPointerException e)
-        {            
-        }
+        //Reset all fields                   
+            idText.setText("");
+            vehicleTypeText.setText("");
+            try
+            {
+                vehicleNumberBox.removeAllItems();
+            }
+            catch(NullPointerException e)
+            {
+                vehicleNumberBox.removeAllItems();
+            }
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -465,4 +469,8 @@ public class Park extends javax.swing.JFrame {
     private javax.swing.JComboBox vehicleNumberBox;
     private javax.swing.JTextField vehicleTypeText;
     // End of variables declaration//GEN-END:variables
+
+    private Timestamp Timestamp(long timeInMillis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

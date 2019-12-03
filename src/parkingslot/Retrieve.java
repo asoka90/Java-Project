@@ -36,7 +36,7 @@ public class Retrieve extends javax.swing.JFrame {
     public void Init_combo()
     {
         Statement st = parking.connectDB();
-        String query = "SELECT [Vehicle Number] FROM Slot";
+        String query = "SELECT [Vehicle Number] FROM Slot WHERE ID != 'AVAILABLE'";
         ArrayList<String> number = new ArrayList<String>();
         try {
             ResultSet rs = st.executeQuery(query);
@@ -195,6 +195,7 @@ public class Retrieve extends javax.swing.JFrame {
         vehicleNumberBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Parking Slot System");
         setResizable(false);
         setSize(257, 213);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -313,7 +314,7 @@ public class Retrieve extends javax.swing.JFrame {
             String vehicleNumber = vehicleNumberBox.getSelectedItem().toString();
             String type = getType(vehicleNumber);
             String id = getID(vehicleNumber);
-            String query = "DELETE FROM Slot WHERE ID = '"+id+"' AND Type = '"+type+"' AND [Vehicle Number] = '"+vehicleNumber+"'";
+            String query = "UPDATE Slot SET ID = NULL, Name = NULL, Type = NULL, [Vehicle Number] = NULL, [Date Parked] = NULL WHERE ID = '"+id+"' AND Type = '"+type+"' AND [Vehicle Number] = '"+vehicleNumber+"'";
             try {
                 PreparedStatement ps = parking.con.prepareStatement(query);
                 ps.executeUpdate();
@@ -334,6 +335,8 @@ public class Retrieve extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(rootPane, "ID or Type is null", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        idText.setText("");
+        vehicleTypeText.setText("");
         Init_combo();
     }//GEN-LAST:event_jButton1ActionPerformed
 

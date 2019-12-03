@@ -3,6 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Parking Slot System"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -118,7 +119,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Calibri" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Edit Data"/>
+        <Property name="text" type="java.lang.String" value="View Data"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
@@ -128,6 +129,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Exit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
@@ -144,7 +148,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="505" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="980" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -173,8 +177,9 @@
                   <Font name="Calibri" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    slots,&#xa;    new String [] {&#xa;        &quot;Slots&quot;, &quot;ID&quot;, &quot;Name&quot;, &quot;Vehicle Number&quot;&#xa;    }&#xa;) {&#xa;    boolean[] canEdit = new boolean [] {&#xa;        false, false, false, false&#xa;    };&#xa;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;        return canEdit [columnIndex];&#xa;    }&#xa;}" type="code"/>
+                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    slots,&#xa;    new String [] {&#xa;        &quot;Slots&quot;, &quot;ID&quot;, &quot;Name&quot;, &quot;Vehicle Number&quot;, &quot;Typed&quot;, &quot;Date Parked&quot;&#xa;    }&#xa;) {&#xa;    boolean[] canEdit = new boolean [] {&#xa;        false, false, false, false, false, false&#xa;    };&#xa;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;        return canEdit [columnIndex];&#xa;    }&#xa;}" type="code"/>
                 </Property>
+                <Property name="autoResizeMode" type="int" value="4"/>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0"/>
                 </Property>
@@ -183,7 +188,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="slotTable.getTableHeader().setResizingAllowed(false);&#xa;slotTable.getTableHeader().setReorderingAllowed(false);&#xa;ParkingSlot ps = new ParkingSlot();&#xa;        Statement st = ps.connectDB();        &#xa;        slots = new Object[50][4];               &#xa;        String count_query = &quot;SELECT Slot, VehicleNumber, Name, id\n&quot; +&#xa;                            &quot;  FROM Student\n&quot; +&#xa;                            &quot; WHERE Slot IS NOT NULL\n&quot; +&#xa;                            &quot;UNION\n&quot; +&#xa;                            &quot;SELECT Slot, VehicleNumber, Name, id\n&quot; +&#xa;                            &quot;  FROM Guest\n&quot; +&#xa;                            &quot; WHERE Slot IS NOT NULL\n&quot; +&#xa;                            &quot;UNION\n&quot; +&#xa;                            &quot;SELECT Slot, VehicleNumber, Name, id\n&quot; +&#xa;                            &quot;  FROM Faculty\n&quot; +&#xa;                            &quot; WHERE Slot IS NOT NULL&quot;;&#xa;int x = 0;&#xa;int numbers[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50};&#xa;int slot_get[];&#xa;slot_get = new int[slots.length + 1];&#xa;        try {&#xa;            ResultSet rsc = st.executeQuery(count_query);            &#xa;            while(rsc.next() &amp;&amp; x &lt; slots.length)&#xa;            {&#xa;                String id = rsc.getString(&quot;id&quot;);&#xa;                int slot = rsc.getInt(&quot;Slot&quot;);&#xa;                String vehicle = rsc.getString(&quot;VehicleNumber&quot;);&#xa;                String name = rsc.getString(&quot;Name&quot;);&#xa;                &#xa;                    slots[x][0] = slot;&#xa;                    slots[x][1] = id;&#xa;                    slots[x][2] = name;&#xa;                    slots[x][3] = vehicle;&#xa;                    slot_get[x] = slot;                      &#xa;                x++;&#xa;            }            &#xa;        } catch (SQLException ex) {&#xa;            Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);&#xa;        }"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="slotTable.getTableHeader().setResizingAllowed(false);&#xa;slotTable.getTableHeader().setReorderingAllowed(false);&#xa;ParkingSlot ps = new ParkingSlot();&#xa;        Statement st = ps.connectDB();        &#xa;        slots = new Object[50][6];               &#xa;        String count_query = &quot;SELECT * FROM Slot&quot;;&#xa;int x = 0;&#xa;int numbers[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50};&#xa;int slot_get[];&#xa;slot_get = new int[slots.length + 1];&#xa;        try {&#xa;            ResultSet rsc = st.executeQuery(count_query);            &#xa;            while(rsc.next() &amp;&amp; x &lt; slots.length)&#xa;            {&#xa;                String id = rsc.getString(&quot;ID&quot;);&#xa;                int slot = rsc.getInt(&quot;Slot Number&quot;);&#xa;                String vehicle = rsc.getString(&quot;Vehicle Number&quot;);&#xa;                String name = rsc.getString(&quot;Name&quot;);&#xa;                String type = rsc.getString(&quot;Type&quot;);&#xa;                String dt = rsc.getString(&quot;Date Parked&quot;);&#xa;                    slots[x][0] = slot;&#xa;                    slots[x][1] = id;&#xa;                    slots[x][2] = name;&#xa;                    slots[x][3] = vehicle;&#xa;                    slots[x][4] = type;&#xa;                    slots[x][5] = dt;&#xa;//                    slot_get[x] = slot;                      &#xa;                x++;&#xa;            }            &#xa;        } catch (SQLException ex) {&#xa;            Logger.getLogger(MenuFrame.class.getName()).log(Level.SEVERE, null, ex);&#xa;        }"/>
               </AuxValues>
             </Component>
           </SubComponents>
