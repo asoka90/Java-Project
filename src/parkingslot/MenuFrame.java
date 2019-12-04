@@ -40,7 +40,6 @@ public class MenuFrame extends javax.swing.JFrame {
         register = new javax.swing.JButton();
         addvehicle = new javax.swing.JButton();
         retrieve = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -78,9 +77,6 @@ public class MenuFrame extends javax.swing.JFrame {
                 retrieveActionPerformed(evt);
             }
         });
-
-        jButton4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jButton4.setText("View Data");
 
         jButton5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton5.setText("Exit");
@@ -180,7 +176,6 @@ public class MenuFrame extends javax.swing.JFrame {
                             .addComponent(register)
                             .addComponent(addvehicle)
                             .addComponent(retrieve)
-                            .addComponent(jButton4)
                             .addComponent(jButton5)
                             .addComponent(park)))
                     .addGroup(layout.createSequentialGroup()
@@ -190,7 +185,7 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addvehicle, jButton4, jButton5, park, register, retrieve});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addvehicle, jButton5, park, register, retrieve});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,8 +200,6 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addComponent(park)
                 .addGap(18, 18, 18)
                 .addComponent(retrieve)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -287,7 +280,6 @@ public class MenuFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addvehicle;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
