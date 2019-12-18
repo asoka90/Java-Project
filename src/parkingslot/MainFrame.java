@@ -49,11 +49,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        user = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        pass = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -92,10 +92,10 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setText("Username");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
 
-        jTextField1.setBackground(new java.awt.Color(11, 11, 11));
-        jTextField1.setForeground(new java.awt.Color(223, 222, 220));
-        jTextField1.setBorder(null);
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 210, 20));
+        user.setBackground(new java.awt.Color(11, 11, 11));
+        user.setForeground(new java.awt.Color(223, 222, 220));
+        user.setBorder(null);
+        jPanel1.add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 210, 20));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 210, 10));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 210, 10));
 
@@ -104,10 +104,10 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3.setText("Password");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
-        jPasswordField1.setBackground(new java.awt.Color(11, 11, 11));
-        jPasswordField1.setForeground(new java.awt.Color(223, 222, 220));
-        jPasswordField1.setBorder(null);
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 210, 20));
+        pass.setBackground(new java.awt.Color(11, 11, 11));
+        pass.setForeground(new java.awt.Color(223, 222, 220));
+        pass.setBorder(null);
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 210, 20));
 
         jLabel4.setFont(new java.awt.Font("DialogInput", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
@@ -150,40 +150,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        JLabel jUserName = new JLabel("User Name");
-        JTextField userName = new JTextField();
-        JLabel jPassword = new JLabel("Password");
-        JTextField password = new JPasswordField();
-        Object[] ob = {jUserName, userName, jPassword, password};
-        int result = JOptionPane.showConfirmDialog(null, ob, "Please input password", JOptionPane.OK_CANCEL_OPTION);
-        
-        if(result == JOptionPane.OK_OPTION)
+        String username = user.getText();
+        String password = pass.getText();
+        if(username.equals("admin") && password.equals("admin"))
         {
-            String user = userName.getText();
-            String pass = password.getText();
-            if(("admin".equals(user)) && ("admin".equals(pass)))
-            {
-                new MenuFrame().setVisible(true);
-                this.dispose();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Incorrect username and password","Login Failed", JOptionPane.WARNING_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(rootPane, "Login Successful", "Login", JOptionPane.PLAIN_MESSAGE);
+            this.dispose();
+            new MenuFrame().setVisible(true);
         }
-        //String p = JOptionPane.showInputDialog(null, "Enter Password: ");
-        
-//        if("admin".equals(p))
-//        {
-//            new MenuFrame().setVisible(true);
-//            this.dispose();
-//        }
-//        else
-//        {
-//            JOptionPane.showMessageDialog(null, "Invalid password", "Login error", JOptionPane.WARNING_MESSAGE);
-//        }
-        
-        
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "Invalid Username and Password", "Login", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -234,10 +212,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField pass;
+    private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }
 

@@ -7,6 +7,7 @@
 package parkingslot;
 
 import com.sun.corba.se.impl.interceptors.SlotTable;
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,7 +15,10 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -23,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
 public class MenuFrame extends javax.swing.JFrame {
     /** Creates new form MenuFrame */
     public static Object slots[][];
-    public MenuFrame() {  
+    public MenuFrame() {        
         initComponents();
     }
 
@@ -36,60 +40,26 @@ public class MenuFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        slotTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         register = new javax.swing.JButton();
         addvehicle = new javax.swing.JButton();
         retrieve = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        slotTable = new javax.swing.JTable();
         park = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Parking Slot System");
         setResizable(false);
-
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel1.setText("Choose:");
-
-        register.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        register.setText("Register a person");
-        register.setRequestFocusEnabled(false);
-        register.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerActionPerformed(evt);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        addvehicle.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        addvehicle.setText("Add a vehicle");
-        addvehicle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addvehicleActionPerformed(evt);
-            }
-        });
-
-        retrieve.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        retrieve.setText("Retrieve a vehicle");
-        retrieve.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                retrieveActionPerformed(evt);
-            }
-        });
-
-        jButton5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jButton5.setText("Exit");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
-        jPanel1.setForeground(new java.awt.Color(240, 240, 240));
-
-        slotTable.getTableHeader().setResizingAllowed(false);
+        //slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         slotTable.getTableHeader().setReorderingAllowed(false);
         ParkingSlot ps = new ParkingSlot();
         Statement st = ps.connectDB();
@@ -137,74 +107,76 @@ public class MenuFrame extends javax.swing.JFrame {
             }
         });
         slotTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        slotTable.setFocusable(false);
         jScrollPane1.setViewportView(slotTable);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 530, 290));
 
-        park.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(11, 11, 11));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        register.setBackground(new java.awt.Color(192, 87, 194));
+        register.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        register.setForeground(new java.awt.Color(255, 255, 255));
+        register.setText("Register a person");
+        register.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        register.setRequestFocusEnabled(false);
+        register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 180, 33));
+
+        addvehicle.setBackground(new java.awt.Color(192, 87, 194));
+        addvehicle.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        addvehicle.setForeground(new java.awt.Color(255, 255, 255));
+        addvehicle.setText("Add a vehicle");
+        addvehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        addvehicle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addvehicleActionPerformed(evt);
+            }
+        });
+        jPanel1.add(addvehicle, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 180, 33));
+
+        retrieve.setBackground(new java.awt.Color(192, 87, 194));
+        retrieve.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        retrieve.setForeground(new java.awt.Color(255, 255, 255));
+        retrieve.setText("Retrieve a vehicle");
+        retrieve.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        retrieve.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retrieveActionPerformed(evt);
+            }
+        });
+        jPanel1.add(retrieve, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 180, 33));
+
+        jButton5.setBackground(new java.awt.Color(192, 87, 194));
+        jButton5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Exit");
+        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 180, 33));
+
+        park.setBackground(new java.awt.Color(192, 87, 194));
+        park.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        park.setForeground(new java.awt.Color(255, 255, 255));
         park.setText("Park a vehicle");
+        park.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         park.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 parkActionPerformed(evt);
             }
         });
+        jPanel1.add(park, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 180, 33));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(register)
-                            .addComponent(addvehicle)
-                            .addComponent(retrieve)
-                            .addComponent(jButton5)
-                            .addComponent(park)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addGap(32, 32, 32)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addvehicle, jButton5, park, register, retrieve});
-
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(register)
-                .addGap(18, 18, 18)
-                .addComponent(addvehicle)
-                .addGap(18, 18, 18)
-                .addComponent(park)
-                .addGap(18, 18, 18)
-                .addComponent(retrieve)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, 290));
 
         pack();
         setLocationRelativeTo(null);
@@ -242,6 +214,19 @@ public class MenuFrame extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        String ObjButtons[] = {"Yes","No"};
+        int PromptResult = JOptionPane.showOptionDialog(null, 
+            "Are you sure you want to exit?", "Online Examination System", 
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+            ObjButtons,ObjButtons[1]);
+        if(PromptResult==0)
+        {
+          System.exit(0);          
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -281,7 +266,6 @@ public class MenuFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addvehicle;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton park;
