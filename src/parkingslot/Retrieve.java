@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,7 +31,9 @@ public class Retrieve extends javax.swing.JFrame {
     ParkingSlot parking = new ParkingSlot();
     public Retrieve() {        
         initComponents();
-        Init_combo();       
+        Init_combo();
+        ImageIcon icon = new ImageIcon("src/parkingslot/misc/icon.png");
+        this.setIconImage(icon.getImage());
     }
     
     public void Init_combo()
@@ -185,14 +188,16 @@ public class Retrieve extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         vehicleTypeText = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         idText = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         vehicleNumberBox = new javax.swing.JComboBox();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Parking Slot System");
@@ -203,64 +208,54 @@ public class Retrieve extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(7, 30, 34));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(103, 146, 137));
+        jLabel2.setText("Vehicle Type:");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
+
+        vehicleTypeText.setBackground(new java.awt.Color(7, 30, 34));
+        vehicleTypeText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehicleTypeText.setBorder(null);
+        vehicleTypeText.setEnabled(false);
+        jPanel3.add(vehicleTypeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 140, 20));
+
+        jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(103, 146, 137));
+        jLabel1.setText("ID:");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
+
+        idText.setBackground(new java.awt.Color(7, 30, 34));
+        idText.setColumns(20);
+        idText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        idText.setBorder(null);
+        idText.setEnabled(false);
+        jPanel3.add(idText, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 140, 20));
+
+        jButton1.setBackground(new java.awt.Color(244, 192, 149));
+        jButton1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 51, 51));
         jButton1.setText("Retrieve vehicle");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jPanel3.setBackground(new java.awt.Color(255, 153, 51));
-
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel2.setText("Vehicle Type:");
-
-        vehicleTypeText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        vehicleTypeText.setEnabled(false);
-
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel1.setText("ID:");
-
-        idText.setColumns(20);
-        idText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        idText.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(vehicleTypeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {idText, vehicleTypeText});
-
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(vehicleTypeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 150, 30));
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(103, 146, 137));
         jLabel3.setText("Vehicle Number:");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
 
-        vehicleNumberBox.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehicleNumberBox.setBackground(new java.awt.Color(244, 192, 149));
+        vehicleNumberBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        vehicleNumberBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         vehicleNumberBox.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)
@@ -269,33 +264,11 @@ public class Retrieve extends javax.swing.JFrame {
                 }
             })
             ;
+            jPanel3.add(vehicleNumberBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 130, -1));
+            jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 153, 140, 10));
+            jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 83, 140, 10));
 
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(32, 32, 32)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(vehicleNumberBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jLabel3))
-                    .addGap(41, 41, 41)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(48, 48, 48)
-                    .addComponent(jLabel3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(vehicleNumberBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(24, 24, 24)
-                    .addComponent(jButton1)
-                    .addContainerGap(57, Short.MAX_VALUE))
-            );
+            getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 450, 205));
 
             pack();
             setLocationRelativeTo(null);
@@ -382,6 +355,8 @@ public class Retrieve extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JComboBox vehicleNumberBox;
     private javax.swing.JTextField vehicleTypeText;
     // End of variables declaration//GEN-END:variables

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +28,8 @@ public class AddVehicle extends javax.swing.JFrame {
     public AddVehicle() {       
         //System.out.println(getName("STU0001"));
         initComponents();
+        ImageIcon icon = new ImageIcon("src/parkingslot/misc/icon.png");
+        this.setIconImage(icon.getImage());
     }
     
     public boolean checkID(String ID)
@@ -133,6 +136,7 @@ public class AddVehicle extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         idText = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -140,6 +144,8 @@ public class AddVehicle extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         vehiclenumberText = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Parking Slot System");
@@ -149,29 +155,48 @@ public class AddVehicle extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(7, 30, 34));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(103, 146, 137));
         jLabel1.setText("ID:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 94, -1));
 
+        idText.setBackground(new java.awt.Color(7, 30, 34));
         idText.setColumns(15);
         idText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        idText.setBorder(null);
         idText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 idTextKeyPressed(evt);
             }
         });
+        jPanel1.add(idText, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 186, 20));
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(103, 146, 137));
         jLabel2.setText("Vehicle Type:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 94, -1));
 
-        vehicleTypeBox.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehicleTypeBox.setBackground(new java.awt.Color(244, 192, 149));
+        vehicleTypeBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        vehicleTypeBox.setForeground(new java.awt.Color(51, 51, 51));
         vehicleTypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cars", "Motorcycle", "Bus", "Truck" }));
+        vehicleTypeBox.setBorder(null);
+        jPanel1.add(vehicleTypeBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 186, -1));
 
         jLabel6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(103, 146, 137));
         jLabel6.setText("Vehicle Number:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
 
+        vehiclenumberText.setBackground(new java.awt.Color(7, 30, 34));
         vehiclenumberText.setColumns(15);
         vehiclenumberText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehiclenumberText.setBorder(null);
         vehiclenumberText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 vehiclenumberTextKeyPressed(evt);
@@ -180,57 +205,23 @@ public class AddVehicle extends javax.swing.JFrame {
                 vehiclenumberTextKeyReleased(evt);
             }
         });
+        jPanel1.add(vehiclenumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 186, 20));
 
-        jButton1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jButton1.setBackground(new java.awt.Color(244, 192, 149));
+        jButton1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 51, 51));
         jButton1.setText("Add Vehicle");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 110, 41));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 190, 10));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 190, 10));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(idText)
-                            .addComponent(vehicleTypeBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(92, 92, 92))
-                            .addComponent(vehiclenumberText))))
-                .addGap(128, 128, 128))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(vehicleTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(vehiclenumberText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 310));
 
         pack();
         setLocationRelativeTo(null);
@@ -438,6 +429,9 @@ public class AddVehicle extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JComboBox vehicleTypeBox;
     private javax.swing.JTextField vehiclenumberText;
     // End of variables declaration//GEN-END:variables

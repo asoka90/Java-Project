@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +30,8 @@ public class MenuFrame extends javax.swing.JFrame {
     public static Object slots[][];
     public MenuFrame() {        
         initComponents();
+        ImageIcon icon = new ImageIcon("src/parkingslot/misc/icon.png");
+        this.setIconImage(icon.getImage());
     }
 
     /** This method is called from within the constructor to
@@ -119,7 +122,7 @@ public class MenuFrame extends javax.swing.JFrame {
         register.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         register.setForeground(new java.awt.Color(255, 255, 255));
         register.setText("Register a person");
-        register.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        register.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         register.setRequestFocusEnabled(false);
         register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +135,7 @@ public class MenuFrame extends javax.swing.JFrame {
         addvehicle.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         addvehicle.setForeground(new java.awt.Color(255, 255, 255));
         addvehicle.setText("Add a vehicle");
-        addvehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        addvehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         addvehicle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addvehicleActionPerformed(evt);
@@ -144,7 +147,7 @@ public class MenuFrame extends javax.swing.JFrame {
         retrieve.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         retrieve.setForeground(new java.awt.Color(255, 255, 255));
         retrieve.setText("Retrieve a vehicle");
-        retrieve.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        retrieve.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         retrieve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 retrieveActionPerformed(evt);
@@ -152,11 +155,11 @@ public class MenuFrame extends javax.swing.JFrame {
         });
         jPanel1.add(retrieve, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 180, 33));
 
-        jButton5.setBackground(new java.awt.Color(192, 87, 194));
+        jButton5.setBackground(new java.awt.Color(255, 51, 51));
         jButton5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Exit");
-        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -168,7 +171,7 @@ public class MenuFrame extends javax.swing.JFrame {
         park.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         park.setForeground(new java.awt.Color(255, 255, 255));
         park.setText("Park a vehicle");
-        park.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        park.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         park.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 parkActionPerformed(evt);
@@ -219,7 +222,7 @@ public class MenuFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         String ObjButtons[] = {"Yes","No"};
         int PromptResult = JOptionPane.showOptionDialog(null, 
-            "Are you sure you want to exit?", "Online Examination System", 
+            "Are you sure you want to exit?", "Exit", 
             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
             ObjButtons,ObjButtons[1]);
         if(PromptResult==0)

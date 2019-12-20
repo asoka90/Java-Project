@@ -32,7 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         jPanel2.setBackground(new Color(0,0,0,200));       
         // iconURL is null when not found
-        ImageIcon icon = new ImageIcon("C:\\Users\\Win10\\Documents\\NetBeansProjects\\ParkingSlot\\src\\parkingslot\\misc\\icon.png");
+        ImageIcon icon = new ImageIcon("src/parkingslot/misc/icon.png");
         this.setIconImage(icon.getImage());
         
     }
@@ -109,8 +109,8 @@ public class MainFrame extends javax.swing.JFrame {
         pass.setBorder(null);
         jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 210, 20));
 
-        jLabel4.setFont(new java.awt.Font("DialogInput", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Made by Keith and Andrei");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 190, -1));
 

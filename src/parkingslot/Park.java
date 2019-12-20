@@ -30,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.ComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.text.html.parser.DTDConstants;
 /**
  *
@@ -45,6 +46,8 @@ public class Park extends javax.swing.JFrame {
     public Park() {        
 //        System.out.println(getName("GUE0001","ASD-123FV"));        
         initComponents();
+        ImageIcon icon = new ImageIcon("src/parkingslot/misc/icon.png");
+        this.setIconImage(icon.getImage());
     }    
     public void action_type(String vehNUmber)
     {
@@ -152,14 +155,16 @@ public class Park extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        idText = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         vehicleNumberBox = new javax.swing.JComboBox();
         vehicleTypeText = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        idText = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Parking Slot System");
@@ -171,34 +176,22 @@ public class Park extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel1.setText("ID:");
-
-        idText.setColumns(20);
-        idText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        idText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                idTextKeyReleased(evt);
-            }
-        });
-
-        jButton1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jButton1.setText("Park vehicle");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jPanel1.setBackground(new java.awt.Color(255, 153, 51));
+        jPanel1.setBackground(new java.awt.Color(7, 30, 34));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(103, 146, 137));
         jLabel2.setText("Vehicle Type:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(103, 146, 137));
         jLabel3.setText("Vehicle Number:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
 
-        vehicleNumberBox.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        vehicleNumberBox.setBackground(new java.awt.Color(244, 192, 149));
+        vehicleNumberBox.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        vehicleNumberBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         vehicleNumberBox.addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)
@@ -213,65 +206,53 @@ public class Park extends javax.swing.JFrame {
                 }
             })
             ;
+            jPanel1.add(vehicleNumberBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 134, -1));
 
+            vehicleTypeText.setBackground(new java.awt.Color(7, 30, 34));
             vehicleTypeText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+            vehicleTypeText.setBorder(null);
             vehicleTypeText.setEnabled(false);
+            jPanel1.add(vehicleTypeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 140, 20));
 
-            javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-            jPanel1.setLayout(jPanel1Layout);
-            jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(62, 62, 62)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(vehicleTypeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel3)
-                        .addComponent(vehicleNumberBox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(59, Short.MAX_VALUE))
-            );
+            jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+            jLabel1.setForeground(new java.awt.Color(103, 146, 137));
+            jLabel1.setText("ID:");
+            jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-            jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {vehicleNumberBox, vehicleTypeText});
+            idText.setBackground(new java.awt.Color(7, 30, 34));
+            idText.setColumns(20);
+            idText.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+            idText.setBorder(null);
+            idText.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyReleased(java.awt.event.KeyEvent evt) {
+                    idTextKeyReleased(evt);
+                }
+            });
+            jPanel1.add(idText, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 140, 20));
 
-            jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(35, 35, 35)
-                    .addComponent(jLabel3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(vehicleNumberBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(13, 13, 13)
-                    .addComponent(jLabel2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(vehicleTypeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(55, Short.MAX_VALUE))
-            );
+            jButton1.setBackground(new java.awt.Color(244, 192, 149));
+            jButton1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+            jButton1.setForeground(new java.awt.Color(51, 51, 51));
+            jButton1.setText("Park vehicle");
+            jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
+            jButton1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton1ActionPerformed(evt);
+                }
+            });
+            jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 105, 33));
+            jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 161, 140, 10));
+            jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 81, 140, 10));
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(32, 32, 32)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addComponent(jLabel1))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
             );
             layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(42, 42, 42)
-                    .addComponent(jLabel1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(35, 35, 35)
-                    .addComponent(jButton1)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
             );
 
             pack();
@@ -466,6 +447,8 @@ public class Park extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JComboBox vehicleNumberBox;
     private javax.swing.JTextField vehicleTypeText;
     // End of variables declaration//GEN-END:variables
