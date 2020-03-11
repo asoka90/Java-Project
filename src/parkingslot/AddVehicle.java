@@ -5,7 +5,8 @@
  */
 package parkingslot;
 
-import com.sun.glass.events.KeyEvent;
+//import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -358,7 +359,7 @@ public class AddVehicle extends javax.swing.JFrame {
         {
             idText.setEditable(false);
         }
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
+        if(evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
         {
             idText.setEditable(true);
         }
@@ -376,7 +377,7 @@ public class AddVehicle extends javax.swing.JFrame {
         {
             vehiclenumberText.setEditable(false);
         }
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
+        if(evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
         {
             vehiclenumberText.setEditable(true);
         }        

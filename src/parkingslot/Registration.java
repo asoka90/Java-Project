@@ -5,14 +5,13 @@
  */
 package parkingslot;
 
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -432,7 +431,7 @@ public class Registration extends javax.swing.JFrame {
         }
         else
         {
-            if(evt.getExtendedKeyCode() == KeyEvent.VK_BACKSPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
+            if(evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE)
             {
                 contact.setEditable(true);
             }

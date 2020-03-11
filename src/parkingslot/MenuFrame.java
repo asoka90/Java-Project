@@ -6,7 +6,6 @@
 
 package parkingslot;
 
-import com.sun.corba.se.impl.interceptors.SlotTable;
 import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
